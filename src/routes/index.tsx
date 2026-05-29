@@ -1,29 +1,39 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ClipCard } from "@/components/feed/ClipCard";
+import { TopBar } from "@/components/feed/TopBar";
+import { BottomNav } from "@/components/feed/BottomNav";
+import { clips } from "@/data/feed";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Rippl — Short videos, big feelings" },
+      {
+        name: "description",
+        content:
+          "Endless vertical video feed. Discover creators, songs, and moments worth replaying.",
+      },
+      { property: "og:title", content: "Rippl — Short videos, big feelings" },
+      {
+        property: "og:description",
+        content:
+          "Endless vertical video feed. Discover creators, songs, and moments worth replaying.",
+      },
     ],
   }),
-  component: Index,
+  component: Feed,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Feed() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="relative mx-auto h-[100dvh] w-full max-w-md overflow-hidden bg-black">
+      <TopBar />
+      <div className="scroll-snap-y no-scrollbar h-full overflow-y-scroll">
+        {clips.map((c) => (
+          <ClipCard key={c.id} clip={c} />
+        ))}
+      </div>
+      <BottomNav />
+    </main>
   );
 }
