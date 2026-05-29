@@ -85,7 +85,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
 
   const togglePlay = () => setPaused((p) => !p);
 
-  const handleDoubleTap = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleDoubleTap = (e: React.MouseEvent<HTMLVideoElement>) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
