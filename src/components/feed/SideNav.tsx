@@ -11,10 +11,18 @@ import {
   MoreHorizontal,
   Search,
 } from "lucide-react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
-const items = [
-  { icon: Home, label: "For You", active: true },
+type Item = {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  to?: string;
+  params?: Record<string, string>;
+};
+
+const items: Item[] = [
+  { icon: Home, label: "For You", to: "/" },
   { icon: Compass, label: "Explore" },
   { icon: UserPlus, label: "Following" },
   { icon: Users, label: "Friends" },
@@ -22,7 +30,7 @@ const items = [
   { icon: MessageSquare, label: "Messages" },
   { icon: Bell, label: "Activity" },
   { icon: PlusSquare, label: "Upload" },
-  { icon: User, label: "Profile" },
+  { icon: User, label: "Profile", to: "/profile/$handle", params: { handle: "lunapark" } },
   { icon: MoreHorizontal, label: "More" },
 ];
 
@@ -47,22 +55,8 @@ export function SideNav() {
         />
       </div>
 
-      <nav className="mt-2 flex flex-col">
-        {items.map((it) => (
-          <button
-            key={it.label}
-            className={cn(
-              "flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-[15px] font-semibold transition",
-              it.active
-                ? "text-tikpink"
-                : "text-foreground/85 hover:bg-secondary",
-            )}
-          >
-            <it.icon className="h-6 w-6" />
-            {it.label}
-          </button>
-        ))}
-      </nav>
+      <NavList />
+
 
       <div className="mt-auto px-3 pt-6 text-[11px] leading-relaxed text-muted-foreground/80">
         <div className="font-semibold text-foreground/80">Company</div>
@@ -71,5 +65,48 @@ export function SideNav() {
         <div className="mt-3">© {new Date().getFullYear()} TikTok</div>
       </div>
     </aside>
+  );
+}
+
+function NavList() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  return (
+    <nav className="mt-2 flex flex-col">
+      {items.map((it) => {
+        const active =
+          it.to === "/"
+            ? pathname === "/"
+            : it.to
+              ? pathname.startsWith(it.to.split("/$")[0])
+              : false;
+        const className = cn(
+          "flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-[15px] font-semibold transition",
+          active ? "text-tikpink" : "text-foreground/85 hover:bg-secondary",
+        );
+        const inner = (
+          <>
+            <it.icon className="h-6 w-6" />
+            {it.label}
+          </>
+        );
+        if (it.to) {
+          return (
+            <Link
+              key={it.label}
+              to={it.to as "/"}
+              params={it.params as never}
+              className={className}
+            >
+              {inner}
+            </Link>
+          );
+        }
+        return (
+          <button key={it.label} className={className}>
+            {inner}
+          </button>
+        );
+      })}
+    </nav>
   );
 }
