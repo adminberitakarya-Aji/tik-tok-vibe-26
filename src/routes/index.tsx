@@ -1,23 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { ChevronUp, ChevronDown, Coins, Smartphone } from "lucide-react";
 import { ClipCard } from "@/components/feed/ClipCard";
 import { TopBar } from "@/components/feed/TopBar";
 import { BottomNav } from "@/components/feed/BottomNav";
 import { SideNav } from "@/components/feed/SideNav";
-import { DesktopHeader } from "@/components/feed/DesktopHeader";
 import { clips } from "@/data/feed";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Rippl — Short videos, big feelings" },
+      { title: "TikTok — Make Your Day" },
       {
         name: "description",
-        content:
-          "Endless vertical video feed. Discover creators, songs, and moments worth replaying.",
-      },
-      { property: "og:title", content: "Rippl — Short videos, big feelings" },
-      {
-        property: "og:description",
         content:
           "Endless vertical video feed. Discover creators, songs, and moments worth replaying.",
       },
@@ -27,40 +22,71 @@ export const Route = createFileRoute("/")({
 });
 
 function Feed() {
+  const [index, setIndex] = useState(0);
+  const clip = clips[index];
+  const prev = () => setIndex((i) => Math.max(0, i - 1));
+  const next = () => setIndex((i) => Math.min(clips.length - 1, i + 1));
+
   return (
     <div className="flex h-[100dvh] w-full bg-background text-foreground">
       <SideNav />
-      <main className="relative flex min-w-0 flex-1 flex-col">
-        <DesktopHeader />
 
-        {/* Mobile: full-bleed snap feed */}
-        <div className="relative flex-1 md:hidden">
-          <div className="relative mx-auto h-full w-full max-w-md overflow-hidden bg-black">
-            <TopBar />
-            <div className="scroll-snap-y no-scrollbar h-full overflow-y-scroll">
-              {clips.map((c) => (
-                <div key={c.id} className="h-[100dvh] w-full">
-                  <ClipCard clip={c} />
-                </div>
-              ))}
+      {/* Mobile */}
+      <main className="relative mx-auto h-full w-full max-w-md overflow-hidden bg-black md:hidden">
+        <TopBar />
+        <div className="scroll-snap-y no-scrollbar h-full overflow-y-scroll">
+          {clips.map((c) => (
+            <div key={c.id} className="h-[100dvh] w-full">
+              <ClipCard clip={c} />
             </div>
-            <BottomNav />
-          </div>
+          ))}
+        </div>
+        <BottomNav />
+      </main>
+
+      {/* Desktop: single centered video like tiktok.com */}
+      <main className="relative hidden flex-1 min-w-0 md:block">
+        {/* Top-right utility bar */}
+        <div className="absolute right-6 top-4 z-20 flex items-center gap-2">
+          <button className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary">
+            <Coins className="h-4 w-4" /> Get Coins
+          </button>
+          <button className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary">
+            <Smartphone className="h-4 w-4" /> Get App
+          </button>
+          <div className="ml-1 h-px w-px bg-border" />
+          <button className="ml-2 grid h-8 w-8 place-items-center rounded-full bg-tikpink text-sm font-bold text-primary-foreground">
+            K
+          </button>
         </div>
 
-        {/* Desktop: centered vertical feed with snap */}
-        <div className="hidden md:block flex-1 overflow-hidden">
-          <div className="scroll-snap-y no-scrollbar mx-auto h-full overflow-y-scroll px-4 py-6">
-            <div className="mx-auto flex w-full max-w-[420px] flex-col gap-6">
-              {clips.map((c) => (
-                <div
-                  key={c.id}
-                  className="snap-item relative aspect-[9/16] w-full overflow-hidden rounded-xl border border-border bg-black shadow-xl"
-                >
-                  <ClipCard clip={c} />
-                </div>
-              ))}
-            </div>
+        {/* Centered video stage */}
+        <div className="flex h-full items-center justify-center px-6">
+          <div
+            className="relative bg-black rounded-md overflow-hidden shadow-2xl"
+            style={{ height: "min(92dvh, calc((100dvh - 4rem)))", aspectRatio: "9 / 16" }}
+          >
+            <ClipCard key={clip.id} clip={clip} />
+          </div>
+
+          {/* Up/Down controls */}
+          <div className="ml-4 flex flex-col gap-3">
+            <button
+              onClick={prev}
+              disabled={index === 0}
+              aria-label="Sebelumnya"
+              className="grid h-11 w-11 place-items-center rounded-full bg-secondary text-foreground transition hover:bg-secondary/70 disabled:opacity-40"
+            >
+              <ChevronUp className="h-5 w-5" />
+            </button>
+            <button
+              onClick={next}
+              disabled={index === clips.length - 1}
+              aria-label="Berikutnya"
+              className="grid h-11 w-11 place-items-center rounded-full bg-secondary text-foreground transition hover:bg-secondary/70 disabled:opacity-40"
+            >
+              <ChevronDown className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </main>
