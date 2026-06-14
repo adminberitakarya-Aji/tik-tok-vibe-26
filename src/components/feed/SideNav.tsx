@@ -55,22 +55,8 @@ export function SideNav() {
         />
       </div>
 
-      <nav className="mt-2 flex flex-col">
-        {items.map((it) => (
-          <button
-            key={it.label}
-            className={cn(
-              "flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-[15px] font-semibold transition",
-              it.active
-                ? "text-tikpink"
-                : "text-foreground/85 hover:bg-secondary",
-            )}
-          >
-            <it.icon className="h-6 w-6" />
-            {it.label}
-          </button>
-        ))}
-      </nav>
+      <NavList />
+
 
       <div className="mt-auto px-3 pt-6 text-[11px] leading-relaxed text-muted-foreground/80">
         <div className="font-semibold text-foreground/80">Company</div>
