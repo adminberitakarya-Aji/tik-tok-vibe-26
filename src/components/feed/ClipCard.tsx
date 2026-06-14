@@ -104,7 +104,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
   return (
     <div
       ref={containerRef}
-      className="snap-item relative h-[100dvh] w-full overflow-hidden bg-black"
+      className="snap-item relative h-full min-h-full w-full overflow-hidden bg-black md:h-full [.md\\:hidden_&]:h-[100dvh]"
     >
       <video
         key={retryKey}
