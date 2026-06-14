@@ -67,3 +67,46 @@ export function SideNav() {
     </aside>
   );
 }
+
+function NavList() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  return (
+    <nav className="mt-2 flex flex-col">
+      {items.map((it) => {
+        const active =
+          it.to === "/"
+            ? pathname === "/"
+            : it.to
+              ? pathname.startsWith(it.to.split("/$")[0])
+              : false;
+        const className = cn(
+          "flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-[15px] font-semibold transition",
+          active ? "text-tikpink" : "text-foreground/85 hover:bg-secondary",
+        );
+        const inner = (
+          <>
+            <it.icon className="h-6 w-6" />
+            {it.label}
+          </>
+        );
+        if (it.to) {
+          return (
+            <Link
+              key={it.label}
+              to={it.to as "/"}
+              params={it.params as never}
+              className={className}
+            >
+              {inner}
+            </Link>
+          );
+        }
+        return (
+          <button key={it.label} className={className}>
+            {inner}
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
