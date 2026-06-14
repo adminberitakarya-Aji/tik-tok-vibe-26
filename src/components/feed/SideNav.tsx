@@ -11,10 +11,18 @@ import {
   MoreHorizontal,
   Search,
 } from "lucide-react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
-const items = [
-  { icon: Home, label: "For You", active: true },
+type Item = {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  to?: string;
+  params?: Record<string, string>;
+};
+
+const items: Item[] = [
+  { icon: Home, label: "For You", to: "/" },
   { icon: Compass, label: "Explore" },
   { icon: UserPlus, label: "Following" },
   { icon: Users, label: "Friends" },
@@ -22,7 +30,7 @@ const items = [
   { icon: MessageSquare, label: "Messages" },
   { icon: Bell, label: "Activity" },
   { icon: PlusSquare, label: "Upload" },
-  { icon: User, label: "Profile" },
+  { icon: User, label: "Profile", to: "/profile/$handle", params: { handle: "lunapark" } },
   { icon: MoreHorizontal, label: "More" },
 ];
 
