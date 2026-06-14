@@ -39,7 +39,9 @@ function Feed() {
             <TopBar />
             <div className="scroll-snap-y no-scrollbar h-full overflow-y-scroll">
               {clips.map((c) => (
-                <ClipCard key={c.id} clip={c} />
+                <div key={c.id} className="h-[100dvh] w-full">
+                  <ClipCard clip={c} />
+                </div>
               ))}
             </div>
             <BottomNav />
