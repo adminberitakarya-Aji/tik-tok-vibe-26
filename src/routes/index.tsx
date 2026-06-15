@@ -1,6 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ChevronUp, ChevronDown, Coins, Smartphone } from "lucide-react";
+import { toast } from "sonner";
+import {
+  ChevronUp,
+  ChevronDown,
+  Coins,
+  Smartphone,
+  User,
+  Settings,
+  Globe,
+  Moon,
+  HelpCircle,
+  Keyboard,
+  LogOut,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ClipCard } from "@/components/feed/ClipCard";
 import { TopBar } from "@/components/feed/TopBar";
 import { BottomNav } from "@/components/feed/BottomNav";
@@ -55,9 +75,45 @@ function Feed() {
             <Smartphone className="h-4 w-4" /> Get App
           </button>
           <div className="ml-1 h-px w-px bg-border" />
-          <button className="ml-2 grid h-8 w-8 place-items-center rounded-full bg-tikpink text-sm font-bold text-primary-foreground">
-            K
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                aria-label="Menu profil"
+                className="ml-2 grid h-8 w-8 place-items-center rounded-full bg-tikpink text-sm font-bold text-primary-foreground outline-none ring-tikpink/40 focus-visible:ring-2"
+              >
+                K
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuItem asChild>
+                <Link to="/profile/$handle" params={{ handle: "lunapark" }} className="cursor-pointer">
+                  <User className="mr-2 h-4 w-4" /> Lihat profil
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => toast("Pengaturan akan segera tersedia")}>
+                <Settings className="mr-2 h-4 w-4" /> Pengaturan
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => toast("Bahasa: Indonesia")}>
+                <Globe className="mr-2 h-4 w-4" /> Bahasa
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => toast("Mode gelap aktif")}>
+                <Moon className="mr-2 h-4 w-4" /> Mode gelap
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => toast("Pusat bantuan")}>
+                <HelpCircle className="mr-2 h-4 w-4" /> Umpan balik & bantuan
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => toast("Pintasan keyboard")}>
+                <Keyboard className="mr-2 h-4 w-4" /> Pintasan keyboard
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => toast.success("Berhasil keluar")}
+                className="text-destructive focus:text-destructive"
+              >
+                <LogOut className="mr-2 h-4 w-4" /> Keluar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Centered video stage */}
