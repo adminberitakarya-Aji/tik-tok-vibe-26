@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import {
   Heart,
   MessageCircle,
@@ -9,9 +11,11 @@ import {
   Volume2,
   VolumeX,
   AlertTriangle,
+  Check,
 } from "lucide-react";
 import type { Clip } from "@/data/feed";
 import { cn } from "@/lib/utils";
+import { CommentSheet } from "./CommentSheet";
 
 function formatCount(n: number) {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
@@ -49,6 +53,9 @@ export function ClipCard({ clip }: { clip: Clip }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [followed, setFollowed] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(false);
+  const [shareCount, setShareCount] = useState(clip.shares);
   const [likeBurst, setLikeBurst] = useState(0);
   const [floatHearts, setFloatHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [paused, setPaused] = useState(false);
@@ -79,7 +86,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
   }, [visible, paused, muted, errored]);
 
   const toggleLike = () => {
-    setLiked(true);
+    setLiked((l) => !l);
     setLikeBurst((b) => b + 1);
   };
 
@@ -92,7 +99,49 @@ export function ClipCard({ clip }: { clip: Clip }) {
     const id = Date.now();
     setFloatHearts((arr) => [...arr, { id, x, y }]);
     setTimeout(() => setFloatHearts((arr) => arr.filter((h) => h.id !== id)), 900);
-    toggleLike();
+    if (!liked) {
+      setLiked(true);
+      setLikeBurst((b) => b + 1);
+    }
+  };
+
+  const handleFollow = () => {
+    setFollowed((f) => {
+      const next = !f;
+      toast.success(next ? `Mengikuti ${clip.username}` : `Berhenti mengikuti ${clip.username}`);
+      return next;
+    });
+  };
+
+  const handleSave = () => {
+    setSaved((s) => {
+      toast.success(s ? "Dihapus dari simpanan" : "Disimpan ke koleksi");
+      return !s;
+    });
+  };
+
+  const handleShare = async () => {
+    const url =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/?clip=${clip.id}`
+        : `/?clip=${clip.id}`;
+    const shareData = {
+      title: `${clip.username} di Rippl`,
+      text: clip.caption,
+      url,
+    };
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(shareData);
+        setShareCount((c) => c + 1);
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      toast.success("Tautan disalin");
+      setShareCount((c) => c + 1);
+    } catch {
+      // user cancelled share — no-op
+    }
   };
 
   const retry = () => {
@@ -198,18 +247,29 @@ export function ClipCard({ clip }: { clip: Clip }) {
       </div>
 
       {/* Right action rail */}
-      <div className="absolute bottom-24 right-2 flex flex-col items-center gap-5 text-foreground">
+      <div className="absolute bottom-24 right-2 z-20 flex flex-col items-center gap-5 text-foreground">
         <div className="relative">
-          <img
-            src={clip.avatar}
-            alt={`Avatar ${clip.username}`}
-            className="h-12 w-12 rounded-full border-2 border-white object-cover"
-          />
-          <button
-            aria-label={`Ikuti ${clip.username}`}
-            className="absolute -bottom-2 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full bg-tikpink text-xs font-bold text-primary-foreground"
+          <Link
+            to="/profile/$handle"
+            params={{ handle: clip.handle.replace(/^@/, "") }}
+            aria-label={`Lihat profil ${clip.username}`}
           >
-            +
+            <img
+              src={clip.avatar}
+              alt={`Avatar ${clip.username}`}
+              className="h-12 w-12 rounded-full border-2 border-white object-cover"
+            />
+          </Link>
+          <button
+            onClick={handleFollow}
+            aria-label={followed ? `Berhenti mengikuti ${clip.username}` : `Ikuti ${clip.username}`}
+            aria-pressed={followed}
+            className={cn(
+              "absolute -bottom-2 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full text-xs font-bold text-primary-foreground transition active:scale-90",
+              followed ? "bg-tikcyan" : "bg-tikpink",
+            )}
+          >
+            {followed ? <Check className="h-3 w-3" /> : "+"}
           </button>
         </div>
 
@@ -229,12 +289,13 @@ export function ClipCard({ clip }: { clip: Clip }) {
           label={formatCount(clip.likes + (liked ? 1 : 0))}
         />
         <ActionBtn
+          onClick={() => setCommentsOpen(true)}
           ariaLabel="Komentar"
           icon={<MessageCircle className="h-8 w-8 text-white" />}
           label={formatCount(clip.comments)}
         />
         <ActionBtn
-          onClick={() => setSaved((s) => !s)}
+          onClick={handleSave}
           ariaLabel="Simpan"
           ariaPressed={saved}
           icon={
@@ -248,9 +309,10 @@ export function ClipCard({ clip }: { clip: Clip }) {
           label="Simpan"
         />
         <ActionBtn
+          onClick={handleShare}
           ariaLabel="Bagikan"
           icon={<Share2 className="h-8 w-8 text-white" />}
-          label={formatCount(clip.shares)}
+          label={formatCount(shareCount)}
         />
 
         {/* Spinning disc */}
@@ -277,6 +339,8 @@ export function ClipCard({ clip }: { clip: Clip }) {
           style={{ width: `${progress}%` }}
         />
       </div>
+
+      <CommentSheet clip={clip} open={commentsOpen} onOpenChange={setCommentsOpen} />
     </div>
   );
 }
