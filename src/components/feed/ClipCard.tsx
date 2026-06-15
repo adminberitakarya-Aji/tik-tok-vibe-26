@@ -53,6 +53,9 @@ export function ClipCard({ clip }: { clip: Clip }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [followed, setFollowed] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(false);
+  const [shareCount, setShareCount] = useState(clip.shares);
   const [likeBurst, setLikeBurst] = useState(0);
   const [floatHearts, setFloatHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [paused, setPaused] = useState(false);
