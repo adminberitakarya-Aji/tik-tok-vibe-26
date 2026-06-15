@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import {
   Heart,
   MessageCircle,
@@ -9,9 +11,11 @@ import {
   Volume2,
   VolumeX,
   AlertTriangle,
+  Check,
 } from "lucide-react";
 import type { Clip } from "@/data/feed";
 import { cn } from "@/lib/utils";
+import { CommentSheet } from "./CommentSheet";
 
 function formatCount(n: number) {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
