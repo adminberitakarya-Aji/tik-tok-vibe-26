@@ -1,6 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ChevronUp, ChevronDown, Coins, Smartphone } from "lucide-react";
+import { toast } from "sonner";
+import {
+  ChevronUp,
+  ChevronDown,
+  Coins,
+  Smartphone,
+  User,
+  Settings,
+  Globe,
+  Moon,
+  HelpCircle,
+  Keyboard,
+  LogOut,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ClipCard } from "@/components/feed/ClipCard";
 import { TopBar } from "@/components/feed/TopBar";
 import { BottomNav } from "@/components/feed/BottomNav";
