@@ -86,7 +86,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
   }, [visible, paused, muted, errored]);
 
   const toggleLike = () => {
-    setLiked(true);
+    setLiked((l) => !l);
     setLikeBurst((b) => b + 1);
   };
 
@@ -99,7 +99,49 @@ export function ClipCard({ clip }: { clip: Clip }) {
     const id = Date.now();
     setFloatHearts((arr) => [...arr, { id, x, y }]);
     setTimeout(() => setFloatHearts((arr) => arr.filter((h) => h.id !== id)), 900);
-    toggleLike();
+    if (!liked) {
+      setLiked(true);
+      setLikeBurst((b) => b + 1);
+    }
+  };
+
+  const handleFollow = () => {
+    setFollowed((f) => {
+      const next = !f;
+      toast.success(next ? `Mengikuti ${clip.username}` : `Berhenti mengikuti ${clip.username}`);
+      return next;
+    });
+  };
+
+  const handleSave = () => {
+    setSaved((s) => {
+      toast.success(s ? "Dihapus dari simpanan" : "Disimpan ke koleksi");
+      return !s;
+    });
+  };
+
+  const handleShare = async () => {
+    const url =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/?clip=${clip.id}`
+        : `/?clip=${clip.id}`;
+    const shareData = {
+      title: `${clip.username} di Rippl`,
+      text: clip.caption,
+      url,
+    };
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(shareData);
+        setShareCount((c) => c + 1);
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      toast.success("Tautan disalin");
+      setShareCount((c) => c + 1);
+    } catch {
+      // user cancelled share — no-op
+    }
   };
 
   const retry = () => {
