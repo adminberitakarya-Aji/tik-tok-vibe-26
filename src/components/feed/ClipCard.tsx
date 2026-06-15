@@ -247,18 +247,29 @@ export function ClipCard({ clip }: { clip: Clip }) {
       </div>
 
       {/* Right action rail */}
-      <div className="absolute bottom-24 right-2 flex flex-col items-center gap-5 text-foreground">
+      <div className="absolute bottom-24 right-2 z-20 flex flex-col items-center gap-5 text-foreground">
         <div className="relative">
-          <img
-            src={clip.avatar}
-            alt={`Avatar ${clip.username}`}
-            className="h-12 w-12 rounded-full border-2 border-white object-cover"
-          />
-          <button
-            aria-label={`Ikuti ${clip.username}`}
-            className="absolute -bottom-2 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full bg-tikpink text-xs font-bold text-primary-foreground"
+          <Link
+            to="/profile/$handle"
+            params={{ handle: clip.handle.replace(/^@/, "") }}
+            aria-label={`Lihat profil ${clip.username}`}
           >
-            +
+            <img
+              src={clip.avatar}
+              alt={`Avatar ${clip.username}`}
+              className="h-12 w-12 rounded-full border-2 border-white object-cover"
+            />
+          </Link>
+          <button
+            onClick={handleFollow}
+            aria-label={followed ? `Berhenti mengikuti ${clip.username}` : `Ikuti ${clip.username}`}
+            aria-pressed={followed}
+            className={cn(
+              "absolute -bottom-2 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full text-xs font-bold text-primary-foreground transition active:scale-90",
+              followed ? "bg-tikcyan" : "bg-tikpink",
+            )}
+          >
+            {followed ? <Check className="h-3 w-3" /> : "+"}
           </button>
         </div>
 
@@ -278,12 +289,13 @@ export function ClipCard({ clip }: { clip: Clip }) {
           label={formatCount(clip.likes + (liked ? 1 : 0))}
         />
         <ActionBtn
+          onClick={() => setCommentsOpen(true)}
           ariaLabel="Komentar"
           icon={<MessageCircle className="h-8 w-8 text-white" />}
           label={formatCount(clip.comments)}
         />
         <ActionBtn
-          onClick={() => setSaved((s) => !s)}
+          onClick={handleSave}
           ariaLabel="Simpan"
           ariaPressed={saved}
           icon={
@@ -297,9 +309,10 @@ export function ClipCard({ clip }: { clip: Clip }) {
           label="Simpan"
         />
         <ActionBtn
+          onClick={handleShare}
           ariaLabel="Bagikan"
           icon={<Share2 className="h-8 w-8 text-white" />}
-          label={formatCount(clip.shares)}
+          label={formatCount(shareCount)}
         />
 
         {/* Spinning disc */}
@@ -326,6 +339,8 @@ export function ClipCard({ clip }: { clip: Clip }) {
           style={{ width: `${progress}%` }}
         />
       </div>
+
+      <CommentSheet clip={clip} open={commentsOpen} onOpenChange={setCommentsOpen} />
     </div>
   );
 }
