@@ -25,10 +25,10 @@ export const Route = createFileRoute("/profile/$handle")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.user.username ?? "Profile"} (${loaderData?.user.handle ?? ""}) — TikTok` },
+      { title: `${loaderData?.user.username ?? "Profile"} (${loaderData?.user.handle ?? ""}) — Klip` },
       {
         name: "description",
-        content: `Tonton video terbaru dari ${loaderData?.user.username ?? "kreator"} di TikTok.`,
+        content: `Tonton video terbaru dari ${loaderData?.user.username ?? "kreator"} di Klip.`,
       },
     ],
   }),
@@ -140,11 +140,11 @@ function ProfilePage() {
               <div className="mt-2 flex items-center gap-1.5 text-sm text-tikcyan">
                 <LinkIcon className="h-3.5 w-3.5" />
                 <a
-                  href={`https://tiktok.com/${user.handle}`}
+                  href={`https://klip.app/${user.handle}`}
                   className="hover:underline"
                   rel="noreferrer noopener"
                 >
-                  tiktok.com/{user.handle}
+                  klip.app/{user.handle}
                 </a>
               </div>
             </div>
