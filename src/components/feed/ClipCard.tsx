@@ -229,7 +229,13 @@ export function ClipCard({ clip }: { clip: Clip }) {
 
       {/* Bottom: caption & meta */}
       <div className="absolute inset-x-0 bottom-20 px-4 pr-20 text-foreground">
-        <div className="text-lg font-bold tracking-tight">{clip.handle}</div>
+        <Link
+          to="/profile/$handle"
+          params={{ handle: clip.handle.replace(/^@/, "") }}
+          className="inline-block text-lg font-bold tracking-tight hover:underline"
+        >
+          {clip.handle}
+        </Link>
         <p className="mt-1 line-clamp-3 text-sm leading-snug">
           {clip.caption}{" "}
           {clip.tags.map((t) => (
