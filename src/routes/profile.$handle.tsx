@@ -101,9 +101,13 @@ function ProfilePage() {
                 >
                   {following ? "Mengikuti" : "Ikuti"}
                 </button>
-                <button className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/70">
+                <Link
+                  to="/inbox"
+                  search={{ chat: user.handle.replace(/^@/, "") }}
+                  className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/70"
+                >
                   Pesan
-                </button>
+                </Link>
                 <button
                   aria-label="Bagikan"
                   className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70"

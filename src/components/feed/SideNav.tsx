@@ -28,7 +28,7 @@ const items: Item[] = [
   { icon: UserPlus, label: "Following" },
   { icon: Users, label: "Friends" },
   { icon: Video, label: "LIVE" },
-  { icon: MessageSquare, label: "Messages" },
+  { icon: MessageSquare, label: "Messages", to: "/inbox" },
   { icon: Bell, label: "Activity" },
   { icon: PlusSquare, label: "Upload" },
   { icon: User, label: "Profile", to: "/profile/$handle", params: { handle: "lunapark" } },
