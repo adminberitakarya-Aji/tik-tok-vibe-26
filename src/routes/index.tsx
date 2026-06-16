@@ -30,7 +30,7 @@ import { clips } from "@/data/feed";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TikTok — Make Your Day" },
+      { title: "Klip — Make Your Day" },
       {
         name: "description",
         content:

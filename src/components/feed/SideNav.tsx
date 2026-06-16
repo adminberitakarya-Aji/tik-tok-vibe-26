@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import klipLogo from "@/assets/klip-logo.png";
 
 type Item = {
   icon: React.ComponentType<{ className?: string }>;
@@ -37,15 +38,18 @@ const items: Item[] = [
 export function SideNav() {
   return (
     <aside className="hidden md:flex h-[100dvh] w-60 lg:w-64 shrink-0 flex-col overflow-y-auto border-r border-border bg-background px-3 py-4">
-      <div className="flex items-center gap-1.5 px-3 pb-4">
-        <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden>
-          <path
-            d="M22 6c1.2 2.4 3.4 3.6 6 3.8v4.4c-2.4 0-4.6-.8-6.4-2v9.2a7.6 7.6 0 1 1-7.6-7.6v4.4a3.2 3.2 0 1 0 3.2 3.2V6h4.8z"
-            fill="currentColor"
-          />
-        </svg>
-        <span className="text-xl font-extrabold tracking-tight">TikTok</span>
-      </div>
+      <Link to="/" className="flex items-center gap-2 px-3 pb-4">
+        <img
+          src={klipLogo}
+          alt="Klip"
+          width={32}
+          height={32}
+          className="h-8 w-8 drop-shadow-[0_0_12px_rgba(254,44,85,0.35)]"
+        />
+        <span className="bg-gradient-to-r from-tikpink to-tikcyan bg-clip-text text-xl font-extrabold tracking-tight text-transparent">
+          Klip
+        </span>
+      </Link>
 
       <div className="mb-2 flex items-center gap-2 rounded-full bg-secondary px-4 py-2">
         <Search className="h-4 w-4 text-muted-foreground" />
@@ -62,7 +66,7 @@ export function SideNav() {
         <div className="font-semibold text-foreground/80">Company</div>
         <div>Program</div>
         <div>Terms & Policies</div>
-        <div className="mt-3">© {new Date().getFullYear()} TikTok</div>
+        <div className="mt-3">© {new Date().getFullYear()} Klip</div>
       </div>
     </aside>
   );
