@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Share2,
@@ -9,10 +9,12 @@ import {
   Bookmark,
   Repeat2,
   Play,
+  ChevronLeft,
 } from "lucide-react";
 import { SideNav } from "@/components/feed/SideNav";
 import { clips } from "@/data/feed";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/profile/$handle")({
   loader: ({ params }) => {
@@ -61,6 +63,7 @@ function formatCount(n: number) {
 
 function ProfilePage() {
   const { user } = Route.useLoaderData();
+  const router = useRouter();
   const [tab, setTab] = useState<Tab>("videos");
   const [following, setFollowing] = useState(false);
 
@@ -70,10 +73,38 @@ function ProfilePage() {
   const followingCount = 312;
   const totalLikes = clips.reduce((s, c) => s + c.likes, 0);
 
+  const handleBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.history.back();
+    } else {
+      router.navigate({ to: "/" });
+    }
+  };
+
   return (
     <div className="flex h-[100dvh] w-full bg-background text-foreground">
       <SideNav />
       <main className="relative flex min-w-0 flex-1 flex-col overflow-y-auto">
+        {/* Header sticky khusus mobile */}
+        <div className="sticky top-0 z-40 flex items-center justify-between border-b border-border bg-background/95 px-2 py-2 backdrop-blur md:hidden">
+          <button
+            onClick={handleBack}
+            aria-label="Kembali"
+            className="grid h-10 w-10 place-items-center rounded-full hover:bg-secondary"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <div className="min-w-0 truncate text-base font-semibold">
+            {user.handle.replace(/^@/, "")}
+          </div>
+          <button
+            aria-label="Menu"
+            className="grid h-10 w-10 place-items-center rounded-full hover:bg-secondary"
+          >
+            <MoreHorizontal className="h-6 w-6" />
+          </button>
+        </div>
+
         <div className="mx-auto w-full max-w-4xl px-6 py-8">
           {/* Profile header */}
           <header className="flex flex-col gap-5 sm:flex-row sm:items-start">
