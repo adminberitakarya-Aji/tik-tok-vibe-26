@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Share2,
@@ -9,10 +9,12 @@ import {
   Bookmark,
   Repeat2,
   Play,
+  ChevronLeft,
 } from "lucide-react";
 import { SideNav } from "@/components/feed/SideNav";
 import { clips } from "@/data/feed";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/profile/$handle")({
   loader: ({ params }) => {
