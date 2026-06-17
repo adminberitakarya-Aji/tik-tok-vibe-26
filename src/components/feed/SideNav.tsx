@@ -23,16 +23,16 @@ type Item = {
 };
 
 const items: Item[] = [
-  { icon: Home, label: "For You", to: "/" },
-  { icon: Compass, label: "Explore" },
-  { icon: UserPlus, label: "Following" },
-  { icon: Users, label: "Friends" },
-  { icon: Video, label: "LIVE" },
-  { icon: MessageSquare, label: "Messages", to: "/inbox" },
-  { icon: Bell, label: "Activity" },
-  { icon: PlusSquare, label: "Upload" },
-  { icon: User, label: "Profile", to: "/profile/$handle", params: { handle: "lunapark" } },
-  { icon: MoreHorizontal, label: "More" },
+  { icon: Home, label: "Untukmu", to: "/" },
+  { icon: Compass, label: "Jelajah" },
+  { icon: UserPlus, label: "Mengikuti" },
+  { icon: Users, label: "Teman" },
+  { icon: Video, label: "LANGSUNG" },
+  { icon: MessageSquare, label: "Pesan", to: "/inbox" },
+  { icon: Bell, label: "Aktivitas" },
+  { icon: PlusSquare, label: "Unggah" },
+  { icon: User, label: "Profil", to: "/profile/$handle", params: { handle: "lunapark" } },
+  { icon: MoreHorizontal, label: "Lainnya" },
 ];
 
 export function SideNav() {
