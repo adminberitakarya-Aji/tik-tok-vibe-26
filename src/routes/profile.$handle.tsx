@@ -25,7 +25,7 @@ export const Route = createFileRoute("/profile/$handle")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.user.username ?? "Profile"} (${loaderData?.user.handle ?? ""}) — Klip` },
+      { title: `${loaderData?.user.username ?? "Profil"} (${loaderData?.user.handle ?? ""}) — Klip` },
       {
         name: "description",
         content: `Tonton video terbaru dari ${loaderData?.user.username ?? "kreator"} di Klip.`,
