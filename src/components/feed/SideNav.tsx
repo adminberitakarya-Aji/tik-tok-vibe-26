@@ -27,7 +27,7 @@ const items: Item[] = [
   { icon: Compass, label: "Jelajah" },
   { icon: UserPlus, label: "Mengikuti" },
   { icon: Users, label: "Teman" },
-  { icon: Video, label: "LANGSUNG" },
+  { icon: Video, label: "LIVE" },
   { icon: MessageSquare, label: "Pesan", to: "/inbox" },
   { icon: Bell, label: "Aktivitas" },
   { icon: PlusSquare, label: "Unggah" },

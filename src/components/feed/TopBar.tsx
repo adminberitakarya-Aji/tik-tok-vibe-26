@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export function TopBar() {
   const [tab, setTab] = useState<"following" | "fyp" | "live">("fyp");
   const tabs: { id: typeof tab; label: string }[] = [
-    { id: "live", label: "LANGSUNG" },
+    { id: "live", label: "LIVE" },
     { id: "following", label: "Mengikuti" },
     { id: "fyp", label: "Untukmu" },
   ];
