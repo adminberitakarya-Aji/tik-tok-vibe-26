@@ -30,7 +30,7 @@ export function TopBar() {
         ))}
       </nav>
       <button
-        aria-label="Search"
+        aria-label="Cari"
         className="pointer-events-auto grid h-10 w-10 place-items-center text-white"
       >
         <Search className="h-5 w-5" />
