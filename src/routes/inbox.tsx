@@ -291,7 +291,7 @@ function ChatView({
           <div className="min-w-0">
             <div className="truncate font-semibold">{conv.username}</div>
             <div className="text-xs text-muted-foreground">
-              {conv.online ? "Online" : "Aktif baru-baru ini"}
+              {conv.online ? "Sedang aktif" : "Aktif baru-baru ini"}
             </div>
           </div>
         </Link>
