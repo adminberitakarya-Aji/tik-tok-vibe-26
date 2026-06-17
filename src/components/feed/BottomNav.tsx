@@ -10,11 +10,11 @@ type Item = {
 };
 
 const items: (Item | { create: true; label: string })[] = [
-  { icon: Home, label: "Home", to: "/" },
-  { icon: Compass, label: "Discover" },
-  { create: true, label: "Create" },
-  { icon: Inbox, label: "Inbox", to: "/inbox" },
-  { icon: User, label: "Profile", to: "/profile/$handle", params: { handle: "lunapark" } },
+  { icon: Home, label: "Beranda", to: "/" },
+  { icon: Compass, label: "Jelajah" },
+  { create: true, label: "Buat" },
+  { icon: Inbox, label: "Pesan", to: "/inbox" },
+  { icon: User, label: "Profil", to: "/profile/$handle", params: { handle: "lunapark" } },
 ];
 
 export function BottomNav() {
