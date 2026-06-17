@@ -54,7 +54,7 @@ export function SideNav() {
       <div className="mb-2 flex items-center gap-2 rounded-full bg-secondary px-4 py-2">
         <Search className="h-4 w-4 text-muted-foreground" />
         <input
-          placeholder="Search"
+          placeholder="Cari"
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
       </div>
@@ -63,9 +63,9 @@ export function SideNav() {
 
 
       <div className="mt-auto px-3 pt-6 text-[11px] leading-relaxed text-muted-foreground/80">
-        <div className="font-semibold text-foreground/80">Company</div>
+        <div className="font-semibold text-foreground/80">Perusahaan</div>
         <div>Program</div>
-        <div>Terms & Policies</div>
+        <div>Ketentuan & Kebijakan</div>
         <div className="mt-3">© {new Date().getFullYear()} Klip</div>
       </div>
     </aside>
