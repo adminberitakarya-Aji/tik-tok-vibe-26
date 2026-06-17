@@ -30,11 +30,11 @@ import { clips } from "@/data/feed";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Klip — Make Your Day" },
+      { title: "Klip — Buat Harimu Bermakna" },
       {
         name: "description",
         content:
-          "Endless vertical video feed. Discover creators, songs, and moments worth replaying.",
+          "Feed video vertikal tanpa batas. Temukan kreator, lagu, dan momen yang layak diputar ulang.",
       },
     ],
   }),
