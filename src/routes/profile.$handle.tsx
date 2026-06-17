@@ -47,10 +47,10 @@ export const Route = createFileRoute("/profile/$handle")({
 type Tab = "videos" | "reposts" | "favorites" | "liked";
 
 const tabs: { id: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-  { id: "videos", label: "Videos", icon: Play },
-  { id: "reposts", label: "Reposts", icon: Repeat2 },
-  { id: "favorites", label: "Favorites", icon: Bookmark },
-  { id: "liked", label: "Liked", icon: Heart },
+  { id: "videos", label: "Video", icon: Play },
+  { id: "reposts", label: "Repost", icon: Repeat2 },
+  { id: "favorites", label: "Favorit", icon: Bookmark },
+  { id: "liked", label: "Disukai", icon: Heart },
 ];
 
 function formatCount(n: number) {
