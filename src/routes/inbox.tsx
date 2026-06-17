@@ -55,7 +55,7 @@ export const Route = createFileRoute("/inbox")({
   }),
   head: () => ({
     meta: [
-      { title: "Inbox — Klip" },
+      { title: "Pesan — Klip" },
       { name: "description", content: "Pesan langsung dari kreator dan teman di Klip." },
     ],
   }),
