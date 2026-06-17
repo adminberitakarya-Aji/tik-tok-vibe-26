@@ -36,6 +36,7 @@ export const Route = createFileRoute("/profile/$handle")({
     <div className="grid h-[100dvh] place-items-center bg-background text-foreground">
       <div className="text-center">
         <h1 className="text-2xl font-bold">Akun tidak ditemukan</h1>
+
         <Link to="/" className="mt-3 inline-block text-tikpink underline">Kembali ke beranda</Link>
       </div>
     </div>
