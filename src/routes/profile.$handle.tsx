@@ -25,7 +25,7 @@ export const Route = createFileRoute("/profile/$handle")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.user.username ?? "Profile"} (${loaderData?.user.handle ?? ""}) — Klip` },
+      { title: `${loaderData?.user.username ?? "Profil"} (${loaderData?.user.handle ?? ""}) — Klip` },
       {
         name: "description",
         content: `Tonton video terbaru dari ${loaderData?.user.username ?? "kreator"} di Klip.`,
@@ -36,6 +36,7 @@ export const Route = createFileRoute("/profile/$handle")({
     <div className="grid h-[100dvh] place-items-center bg-background text-foreground">
       <div className="text-center">
         <h1 className="text-2xl font-bold">Akun tidak ditemukan</h1>
+
         <Link to="/" className="mt-3 inline-block text-tikpink underline">Kembali ke beranda</Link>
       </div>
     </div>
@@ -46,10 +47,10 @@ export const Route = createFileRoute("/profile/$handle")({
 type Tab = "videos" | "reposts" | "favorites" | "liked";
 
 const tabs: { id: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-  { id: "videos", label: "Videos", icon: Play },
-  { id: "reposts", label: "Reposts", icon: Repeat2 },
-  { id: "favorites", label: "Favorites", icon: Bookmark },
-  { id: "liked", label: "Liked", icon: Heart },
+  { id: "videos", label: "Video", icon: Play },
+  { id: "reposts", label: "Repost", icon: Repeat2 },
+  { id: "favorites", label: "Favorit", icon: Bookmark },
+  { id: "liked", label: "Disukai", icon: Heart },
 ];
 
 function formatCount(n: number) {
