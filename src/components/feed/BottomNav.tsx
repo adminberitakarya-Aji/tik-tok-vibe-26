@@ -26,7 +26,7 @@ export function BottomNav() {
           return (
             <button
               key={i}
-              aria-label="Create"
+              aria-label="Buat"
               className="relative grid h-8 w-12 place-items-center"
             >
               <span className="absolute inset-0 -left-1 rounded-md bg-tikcyan" />
