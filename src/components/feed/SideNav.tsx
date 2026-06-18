@@ -24,15 +24,15 @@ type Item = {
 
 const items: Item[] = [
   { icon: Home, label: "Untukmu", to: "/" },
-  { icon: Compass, label: "Jelajah" },
-  { icon: UserPlus, label: "Mengikuti" },
-  { icon: Users, label: "Teman" },
-  { icon: Video, label: "LIVE" },
+  { icon: Compass, label: "Jelajah", to: "/explore" },
+  { icon: UserPlus, label: "Mengikuti", to: "/following" },
+  { icon: Users, label: "Teman", to: "/friends" },
+  { icon: Video, label: "LIVE", to: "/live" },
   { icon: MessageSquare, label: "Pesan", to: "/inbox" },
-  { icon: Bell, label: "Aktivitas" },
-  { icon: PlusSquare, label: "Unggah" },
+  { icon: Bell, label: "Aktivitas", to: "/activity" },
+  { icon: PlusSquare, label: "Unggah", to: "/upload" },
   { icon: User, label: "Profil", to: "/profile/$handle", params: { handle: "lunapark" } },
-  { icon: MoreHorizontal, label: "Lainnya" },
+  { icon: MoreHorizontal, label: "Lainnya", to: "/more" },
 ];
 
 export function SideNav() {
