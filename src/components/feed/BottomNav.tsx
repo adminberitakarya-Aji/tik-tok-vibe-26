@@ -9,10 +9,10 @@ type Item = {
   params?: Record<string, string>;
 };
 
-const items: (Item | { create: true; label: string })[] = [
+const items: (Item | { create: true; label: string; to: string })[] = [
   { icon: Home, label: "Beranda", to: "/" },
-  { icon: Compass, label: "Jelajah" },
-  { create: true, label: "Buat" },
+  { icon: Compass, label: "Jelajah", to: "/explore" },
+  { create: true, label: "Buat", to: "/upload" },
   { icon: Inbox, label: "Pesan", to: "/inbox" },
   { icon: User, label: "Profil", to: "/profile/$handle", params: { handle: "lunapark" } },
 ];
@@ -24,8 +24,9 @@ export function BottomNav() {
       {items.map((it, i) => {
         if ("create" in it) {
           return (
-            <button
+            <Link
               key={i}
+              to={it.to as "/"}
               aria-label="Buat"
               className="relative grid h-8 w-12 place-items-center"
             >
@@ -34,7 +35,7 @@ export function BottomNav() {
               <span className="relative grid h-full w-full place-items-center rounded-md bg-white">
                 <Plus className="h-5 w-5 text-black" strokeWidth={3} />
               </span>
-            </button>
+            </Link>
           );
         }
         const active = it.to

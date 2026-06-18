@@ -9,13 +9,55 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UploadRouteImport } from './routes/upload'
+import { Route as MoreRouteImport } from './routes/more'
+import { Route as LiveRouteImport } from './routes/live'
 import { Route as InboxRouteImport } from './routes/inbox'
+import { Route as FriendsRouteImport } from './routes/friends'
+import { Route as FollowingRouteImport } from './routes/following'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProfileHandleRouteImport } from './routes/profile.$handle'
 
+const UploadRoute = UploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoreRoute = MoreRouteImport.update({
+  id: '/more',
+  path: '/more',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LiveRoute = LiveRouteImport.update({
+  id: '/live',
+  path: '/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InboxRoute = InboxRouteImport.update({
   id: '/inbox',
   path: '/inbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FriendsRoute = FriendsRouteImport.update({
+  id: '/friends',
+  path: '/friends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FollowingRoute = FollowingRouteImport.update({
+  id: '/following',
+  path: '/following',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivityRoute = ActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,41 +73,149 @@ const ProfileHandleRoute = ProfileHandleRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/explore': typeof ExploreRoute
+  '/following': typeof FollowingRoute
+  '/friends': typeof FriendsRoute
   '/inbox': typeof InboxRoute
+  '/live': typeof LiveRoute
+  '/more': typeof MoreRoute
+  '/upload': typeof UploadRoute
   '/profile/$handle': typeof ProfileHandleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/explore': typeof ExploreRoute
+  '/following': typeof FollowingRoute
+  '/friends': typeof FriendsRoute
   '/inbox': typeof InboxRoute
+  '/live': typeof LiveRoute
+  '/more': typeof MoreRoute
+  '/upload': typeof UploadRoute
   '/profile/$handle': typeof ProfileHandleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/explore': typeof ExploreRoute
+  '/following': typeof FollowingRoute
+  '/friends': typeof FriendsRoute
   '/inbox': typeof InboxRoute
+  '/live': typeof LiveRoute
+  '/more': typeof MoreRoute
+  '/upload': typeof UploadRoute
   '/profile/$handle': typeof ProfileHandleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/inbox' | '/profile/$handle'
+  fullPaths:
+    | '/'
+    | '/activity'
+    | '/explore'
+    | '/following'
+    | '/friends'
+    | '/inbox'
+    | '/live'
+    | '/more'
+    | '/upload'
+    | '/profile/$handle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/inbox' | '/profile/$handle'
-  id: '__root__' | '/' | '/inbox' | '/profile/$handle'
+  to:
+    | '/'
+    | '/activity'
+    | '/explore'
+    | '/following'
+    | '/friends'
+    | '/inbox'
+    | '/live'
+    | '/more'
+    | '/upload'
+    | '/profile/$handle'
+  id:
+    | '__root__'
+    | '/'
+    | '/activity'
+    | '/explore'
+    | '/following'
+    | '/friends'
+    | '/inbox'
+    | '/live'
+    | '/more'
+    | '/upload'
+    | '/profile/$handle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivityRoute: typeof ActivityRoute
+  ExploreRoute: typeof ExploreRoute
+  FollowingRoute: typeof FollowingRoute
+  FriendsRoute: typeof FriendsRoute
   InboxRoute: typeof InboxRoute
+  LiveRoute: typeof LiveRoute
+  MoreRoute: typeof MoreRoute
+  UploadRoute: typeof UploadRoute
   ProfileHandleRoute: typeof ProfileHandleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upload': {
+      id: '/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/more': {
+      id: '/more'
+      path: '/more'
+      fullPath: '/more'
+      preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/live': {
+      id: '/live'
+      path: '/live'
+      fullPath: '/live'
+      preLoaderRoute: typeof LiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inbox': {
       id: '/inbox'
       path: '/inbox'
       fullPath: '/inbox'
       preLoaderRoute: typeof InboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/friends': {
+      id: '/friends'
+      path: '/friends'
+      fullPath: '/friends'
+      preLoaderRoute: typeof FriendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/following': {
+      id: '/following'
+      path: '/following'
+      fullPath: '/following'
+      preLoaderRoute: typeof FollowingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activity': {
+      id: '/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof ActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,7 +237,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivityRoute: ActivityRoute,
+  ExploreRoute: ExploreRoute,
+  FollowingRoute: FollowingRoute,
+  FriendsRoute: FriendsRoute,
   InboxRoute: InboxRoute,
+  LiveRoute: LiveRoute,
+  MoreRoute: MoreRoute,
+  UploadRoute: UploadRoute,
   ProfileHandleRoute: ProfileHandleRoute,
 }
 export const routeTree = rootRouteImport
