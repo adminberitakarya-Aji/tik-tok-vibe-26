@@ -68,10 +68,16 @@ function Feed() {
       <main className="relative hidden flex-1 min-w-0 md:block">
         {/* Top-right utility bar */}
         <div className="absolute right-6 top-4 z-20 flex items-center gap-2">
-          <button className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary">
+          <button
+            onClick={() => toast("Isi ulang koin akan segera tersedia")}
+            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary"
+          >
             <Coins className="h-4 w-4" /> Get Coins
           </button>
-          <button className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary">
+          <button
+            onClick={() => toast("Tautan unduh aplikasi dikirim")}
+            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary"
+          >
             <Smartphone className="h-4 w-4" /> Get App
           </button>
           <div className="ml-1 h-px w-px bg-border" />
