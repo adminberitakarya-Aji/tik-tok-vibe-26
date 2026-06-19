@@ -19,6 +19,7 @@ import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProfileHandleRouteImport } from './routes/profile.$handle'
+import { Route as MoreSectionRouteImport } from './routes/more.$section'
 
 const UploadRoute = UploadRouteImport.update({
   id: '/upload',
@@ -70,6 +71,11 @@ const ProfileHandleRoute = ProfileHandleRouteImport.update({
   path: '/profile/$handle',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MoreSectionRoute = MoreSectionRouteImport.update({
+  id: '/$section',
+  path: '/$section',
+  getParentRoute: () => MoreRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -79,8 +85,9 @@ export interface FileRoutesByFullPath {
   '/friends': typeof FriendsRoute
   '/inbox': typeof InboxRoute
   '/live': typeof LiveRoute
-  '/more': typeof MoreRoute
+  '/more': typeof MoreRouteWithChildren
   '/upload': typeof UploadRoute
+  '/more/$section': typeof MoreSectionRoute
   '/profile/$handle': typeof ProfileHandleRoute
 }
 export interface FileRoutesByTo {
@@ -91,8 +98,9 @@ export interface FileRoutesByTo {
   '/friends': typeof FriendsRoute
   '/inbox': typeof InboxRoute
   '/live': typeof LiveRoute
-  '/more': typeof MoreRoute
+  '/more': typeof MoreRouteWithChildren
   '/upload': typeof UploadRoute
+  '/more/$section': typeof MoreSectionRoute
   '/profile/$handle': typeof ProfileHandleRoute
 }
 export interface FileRoutesById {
@@ -104,8 +112,9 @@ export interface FileRoutesById {
   '/friends': typeof FriendsRoute
   '/inbox': typeof InboxRoute
   '/live': typeof LiveRoute
-  '/more': typeof MoreRoute
+  '/more': typeof MoreRouteWithChildren
   '/upload': typeof UploadRoute
+  '/more/$section': typeof MoreSectionRoute
   '/profile/$handle': typeof ProfileHandleRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/live'
     | '/more'
     | '/upload'
+    | '/more/$section'
     | '/profile/$handle'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/live'
     | '/more'
     | '/upload'
+    | '/more/$section'
     | '/profile/$handle'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/live'
     | '/more'
     | '/upload'
+    | '/more/$section'
     | '/profile/$handle'
   fileRoutesById: FileRoutesById
 }
@@ -155,7 +167,7 @@ export interface RootRouteChildren {
   FriendsRoute: typeof FriendsRoute
   InboxRoute: typeof InboxRoute
   LiveRoute: typeof LiveRoute
-  MoreRoute: typeof MoreRoute
+  MoreRoute: typeof MoreRouteWithChildren
   UploadRoute: typeof UploadRoute
   ProfileHandleRoute: typeof ProfileHandleRoute
 }
@@ -232,8 +244,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileHandleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/more/$section': {
+      id: '/more/$section'
+      path: '/$section'
+      fullPath: '/more/$section'
+      preLoaderRoute: typeof MoreSectionRouteImport
+      parentRoute: typeof MoreRoute
+    }
   }
 }
+
+interface MoreRouteChildren {
+  MoreSectionRoute: typeof MoreSectionRoute
+}
+
+const MoreRouteChildren: MoreRouteChildren = {
+  MoreSectionRoute: MoreSectionRoute,
+}
+
+const MoreRouteWithChildren = MoreRoute._addFileChildren(MoreRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -243,7 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   FriendsRoute: FriendsRoute,
   InboxRoute: InboxRoute,
   LiveRoute: LiveRoute,
-  MoreRoute: MoreRoute,
+  MoreRoute: MoreRouteWithChildren,
   UploadRoute: UploadRoute,
   ProfileHandleRoute: ProfileHandleRoute,
 }
