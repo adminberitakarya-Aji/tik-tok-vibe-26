@@ -2,13 +2,13 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { PageShell } from "@/components/feed/PageShell";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import { toast } from "sonner";
 
 type SectionDef = {
   title: string;
   subtitle: string;
-  render: () => JSX.Element;
+  render: () => ReactElement;
 };
 
 const SECTIONS: Record<string, SectionDef> = {
