@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { PageShell } from "@/components/feed/PageShell";
 import {
   Settings,
@@ -10,6 +10,18 @@ import {
   FileText,
   ChevronRight,
 } from "lucide-react";
+import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/more")({
   head: () => ({
@@ -21,30 +33,41 @@ export const Route = createFileRoute("/more")({
   component: MorePage,
 });
 
-const groups: { title: string; items: { icon: any; label: string; danger?: boolean }[] }[] = [
+type Item = {
+  icon: any;
+  label: string;
+  to?: string;
+  danger?: boolean;
+  action?: "logout";
+};
+
+const groups: { title: string; items: Item[] }[] = [
   {
     title: "Akun",
     items: [
-      { icon: Settings, label: "Pengaturan" },
-      { icon: Shield, label: "Privasi" },
-      { icon: Globe, label: "Bahasa" },
-      { icon: Moon, label: "Tampilan" },
+      { icon: Settings, label: "Pengaturan", to: "/more/pengaturan" },
+      { icon: Shield, label: "Privasi", to: "/more/privasi" },
+      { icon: Globe, label: "Bahasa", to: "/more/bahasa" },
+      { icon: Moon, label: "Tampilan", to: "/more/tampilan" },
     ],
   },
   {
     title: "Dukungan",
     items: [
-      { icon: HelpCircle, label: "Bantuan" },
-      { icon: FileText, label: "Ketentuan & Kebijakan" },
+      { icon: HelpCircle, label: "Bantuan", to: "/more/bantuan" },
+      { icon: FileText, label: "Ketentuan & Kebijakan", to: "/more/ketentuan" },
     ],
   },
   {
     title: "Sesi",
-    items: [{ icon: LogOut, label: "Keluar", danger: true }],
+    items: [{ icon: LogOut, label: "Keluar", danger: true, action: "logout" }],
   },
 ];
 
 function MorePage() {
+  const router = useRouter();
+  const [confirmLogout, setConfirmLogout] = useState(false);
+
   return (
     <PageShell title="Lainnya" subtitle="Pengaturan dan opsi tambahan">
       <div className="mx-auto max-w-2xl space-y-6">
@@ -54,22 +77,62 @@ function MorePage() {
               {g.title}
             </div>
             <div className="overflow-hidden rounded-xl border border-border">
-              {g.items.map((it, i) => (
-                <button
-                  key={it.label}
-                  className={`flex w-full items-center gap-3 px-4 py-3.5 text-left text-sm transition hover:bg-secondary/50 ${
-                    i > 0 ? "border-t border-border" : ""
-                  } ${it.danger ? "text-tikpink" : ""}`}
-                >
-                  <it.icon className="h-5 w-5" />
-                  <span className="flex-1 font-medium">{it.label}</span>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                </button>
-              ))}
+              {g.items.map((it, i) => {
+                const cls = `flex w-full items-center gap-3 px-4 py-3.5 text-left text-sm transition hover:bg-secondary/50 ${
+                  i > 0 ? "border-t border-border" : ""
+                } ${it.danger ? "text-tikpink" : ""}`;
+                const inner = (
+                  <>
+                    <it.icon className="h-5 w-5" />
+                    <span className="flex-1 font-medium">{it.label}</span>
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  </>
+                );
+                if (it.to) {
+                  return (
+                    <Link key={it.label} to={it.to as "/"} className={cls}>
+                      {inner}
+                    </Link>
+                  );
+                }
+                return (
+                  <button
+                    key={it.label}
+                    onClick={() => {
+                      if (it.action === "logout") setConfirmLogout(true);
+                    }}
+                    className={cls}
+                  >
+                    {inner}
+                  </button>
+                );
+              })}
             </div>
           </div>
         ))}
       </div>
+
+      <AlertDialog open={confirmLogout} onOpenChange={setConfirmLogout}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Keluar dari Klip?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Kamu akan dikeluarkan dari sesi ini dan dialihkan ke beranda.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                toast("Berhasil keluar");
+                router.navigate({ to: "/" });
+              }}
+            >
+              Keluar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageShell>
   );
 }
