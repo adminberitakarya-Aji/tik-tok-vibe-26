@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ClipCard } from "@/components/feed/ClipCard";
+import { DesktopClipView } from "@/components/feed/DesktopClipView";
 import { TopBar } from "@/components/feed/TopBar";
 import { BottomNav } from "@/components/feed/BottomNav";
 import { SideNav } from "@/components/feed/SideNav";
@@ -122,34 +123,29 @@ function Feed() {
           </DropdownMenu>
         </div>
 
-        {/* Centered video stage */}
-        <div className="flex h-full items-center justify-center px-6">
-          <div
-            className="relative bg-black rounded-md overflow-hidden shadow-2xl"
-            style={{ height: "min(92dvh, calc((100dvh - 4rem)))", aspectRatio: "9 / 16" }}
-          >
-            <ClipCard key={clip.id} clip={clip} />
-          </div>
+        {/* Centered tiktok-style stage */}
+        <div className="flex h-full items-start justify-center px-6 pt-6">
+          <DesktopClipView key={clip.id} clip={clip} />
+        </div>
 
-          {/* Up/Down controls */}
-          <div className="ml-4 flex flex-col gap-3">
-            <button
-              onClick={prev}
-              disabled={index === 0}
-              aria-label="Sebelumnya"
-              className="grid h-11 w-11 place-items-center rounded-full bg-secondary text-foreground transition hover:bg-secondary/70 disabled:opacity-40"
-            >
-              <ChevronUp className="h-5 w-5" />
-            </button>
-            <button
-              onClick={next}
-              disabled={index === clips.length - 1}
-              aria-label="Berikutnya"
-              className="grid h-11 w-11 place-items-center rounded-full bg-secondary text-foreground transition hover:bg-secondary/70 disabled:opacity-40"
-            >
-              <ChevronDown className="h-5 w-5" />
-            </button>
-          </div>
+        {/* Up/Down controls — far right edge */}
+        <div className="absolute right-6 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-3">
+          <button
+            onClick={prev}
+            disabled={index === 0}
+            aria-label="Sebelumnya"
+            className="grid h-11 w-11 place-items-center rounded-full bg-secondary text-foreground transition hover:bg-secondary/70 disabled:opacity-40 cursor-pointer"
+          >
+            <ChevronUp className="h-5 w-5" />
+          </button>
+          <button
+            onClick={next}
+            disabled={index === clips.length - 1}
+            aria-label="Berikutnya"
+            className="grid h-11 w-11 place-items-center rounded-full bg-secondary text-foreground transition hover:bg-secondary/70 disabled:opacity-40 cursor-pointer"
+          >
+            <ChevronDown className="h-5 w-5" />
+          </button>
         </div>
       </main>
     </div>
