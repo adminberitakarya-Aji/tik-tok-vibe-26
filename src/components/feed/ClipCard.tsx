@@ -321,15 +321,19 @@ export function ClipCard({ clip }: { clip: Clip }) {
           label={formatCount(shareCount)}
         />
 
-        {/* Spinning disc */}
-        <div className="mt-2 h-12 w-12 animate-spin-slow rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1">
+        {/* Spinning disc — opens sound */}
+        <button
+          onClick={() => toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" })}
+          aria-label={`Suara: ${clip.song}`}
+          className="mt-2 h-12 w-12 animate-spin-slow rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 active:scale-90 transition"
+        >
           <img
             src={clip.avatar}
             alt=""
             aria-hidden
             className="h-full w-full rounded-full border-2 border-black object-cover"
           />
-        </div>
+        </button>
       </div>
 
       {/* Progress bar */}
