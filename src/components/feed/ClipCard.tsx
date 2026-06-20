@@ -218,7 +218,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
         onClick={() => setMuted(!muted)}
         aria-label={muted ? "Suarakan" : "Bisukan"}
         aria-pressed={!muted}
-        className="absolute right-3 top-20 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/40 text-foreground backdrop-blur active:scale-90"
+        className="absolute right-3 top-20 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/40 text-foreground backdrop-blur active:scale-90 cursor-pointer"
       >
         {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
       </button>
@@ -271,7 +271,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
             aria-label={followed ? `Berhenti mengikuti ${clip.username}` : `Ikuti ${clip.username}`}
             aria-pressed={followed}
             className={cn(
-              "absolute -bottom-2 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full text-xs font-bold text-primary-foreground transition active:scale-90",
+              "absolute -bottom-2 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full text-xs font-bold text-primary-foreground transition active:scale-90 cursor-pointer",
               followed ? "bg-tikcyan" : "bg-tikpink",
             )}
           >
@@ -325,7 +325,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
         <button
           onClick={() => toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" })}
           aria-label={`Suara: ${clip.song}`}
-          className="mt-2 h-12 w-12 animate-spin-slow rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 active:scale-90 transition"
+          className="mt-2 h-12 w-12 animate-spin-slow rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 active:scale-90 transition cursor-pointer"
         >
           <img
             src={clip.avatar}
@@ -373,7 +373,7 @@ function ActionBtn({
       onClick={onClick}
       aria-label={ariaLabel}
       aria-pressed={ariaPressed}
-      className="flex flex-col items-center gap-1 active:scale-90 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-tikcyan rounded-md"
+      className="flex flex-col items-center gap-1 active:scale-90 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-tikcyan rounded-md cursor-pointer"
     >
       {icon}
       <span className="text-xs font-semibold drop-shadow">{label}</span>
