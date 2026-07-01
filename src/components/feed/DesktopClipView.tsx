@@ -168,46 +168,48 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
             <MoreHorizontal className="h-4 w-4" />
           </button>
 
+          {/* Caption overlay (bottom-left of video, like tiktok.com) */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-1 z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-4 pb-4 pt-10">
+            <div className="pointer-events-auto max-w-[85%]">
+              <Link
+                to="/profile/$handle"
+                params={{ handle: clip.handle.replace(/^@/, "") }}
+                className="text-base font-bold text-white hover:underline"
+              >
+                {clip.handle}
+              </Link>
+              <p
+                className={cn(
+                  "mt-1 text-sm leading-snug text-white/95",
+                  !expanded && "line-clamp-2",
+                )}
+              >
+                {clip.caption}{" "}
+                {clip.tags.map((t) => (
+                  <span key={t} className="font-semibold text-tikcyan">
+                    #{t}{" "}
+                  </span>
+                ))}
+              </p>
+              <button
+                onClick={() => setExpanded((e) => !e)}
+                className="mt-0.5 text-xs font-semibold text-white/70 hover:text-white cursor-pointer"
+              >
+                {expanded ? "lebih sedikit" : "selengkapnya"}
+              </button>
+              <div className="mt-2 flex items-center gap-2 text-xs text-white/90">
+                <Music2 className="h-3.5 w-3.5" aria-hidden />
+                <span className="truncate">{clip.song}</span>
+              </div>
+            </div>
+          </div>
+
           {/* Progress */}
-          <div className="absolute inset-x-0 bottom-0 h-1 bg-white/20">
+          <div className="absolute inset-x-0 bottom-0 z-20 h-1 bg-white/20">
             <div
               className="h-full bg-tikpink transition-[width] duration-150"
               style={{ width: `${progress}%` }}
             />
-          </div>
-        </div>
-
-        {/* Caption row below video */}
-        <div className="mt-3 max-w-[420px]">
-          <Link
-            to="/profile/$handle"
-            params={{ handle: clip.handle.replace(/^@/, "") }}
-            className="text-base font-bold hover:underline"
-          >
-            {clip.handle}
-          </Link>
-          <p
-            className={cn(
-              "mt-1 text-sm leading-snug text-foreground/90",
-              !expanded && "line-clamp-2",
-            )}
-          >
-            {clip.caption}{" "}
-            {clip.tags.map((t) => (
-              <span key={t} className="font-semibold text-tikcyan">
-                #{t}{" "}
-              </span>
-            ))}
-          </p>
-          <button
-            onClick={() => setExpanded((e) => !e)}
-            className="mt-0.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
-          >
-            {expanded ? "lebih sedikit" : "selengkapnya"}
-          </button>
-          <div className="mt-2 flex items-center gap-2 text-xs text-foreground/85">
-            <Music2 className="h-3.5 w-3.5" aria-hidden />
-            <span className="truncate">{clip.song}</span>
           </div>
         </div>
       </div>
