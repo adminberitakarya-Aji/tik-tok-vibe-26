@@ -100,7 +100,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
   };
 
   return (
-    <div className="flex items-end gap-4">
+    <div className="flex items-end gap-3">
       {/* Video stage */}
       <div className="flex flex-col">
         <div
@@ -170,7 +170,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
 
           {/* Caption overlay (bottom-left of video, like tiktok.com) */}
           <div className="pointer-events-none absolute inset-x-0 bottom-1 z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-4 pb-4 pt-10">
-            <div className="pointer-events-auto max-w-[85%]">
+            <div className="pointer-events-auto max-w-[80%]">
               <Link
                 to="/profile/$handle"
                 params={{ handle: clip.handle.replace(/^@/, "") }}
@@ -214,9 +214,9 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
         </div>
       </div>
 
-      {/* Action rail OUTSIDE video, like tiktok.com */}
-      <div className="flex flex-col items-center gap-4 pb-24">
-        <div className="relative">
+      {/* Action rail — flush right of video, like tiktok.com */}
+      <div className="flex flex-col items-center gap-3 pb-3">
+        <div className="relative mb-1">
           <Link
             to="/profile/$handle"
             params={{ handle: clip.handle.replace(/^@/, "") }}
@@ -225,14 +225,14 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
             <img
               src={clip.avatar}
               alt={`Avatar ${clip.username}`}
-              className="h-12 w-12 rounded-full border border-border object-cover"
+              className="h-12 w-12 rounded-full border-2 border-white/20 object-cover"
             />
           </Link>
           <button
             onClick={handleFollow}
             aria-label={followed ? "Berhenti mengikuti" : "Ikuti"}
             className={cn(
-              "absolute -bottom-2 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full text-xs font-bold text-primary-foreground active:scale-90 cursor-pointer",
+              "absolute -bottom-1.5 left-1/2 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full border-2 border-black text-xs font-bold text-white active:scale-90 cursor-pointer",
               followed ? "bg-tikcyan" : "bg-tikpink",
             )}
           >
@@ -245,7 +245,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
           ariaLabel="Suka"
           icon={
             <Heart
-              className={cn("h-6 w-6", liked ? "fill-tikpink text-tikpink" : "text-foreground")}
+              className={cn("h-7 w-7", liked ? "fill-tikpink text-tikpink" : "text-white")}
             />
           }
           label={formatCount(clip.likes + (liked ? 1 : 0))}
@@ -253,7 +253,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
         <RailBtn
           onClick={() => setCommentsOpen(true)}
           ariaLabel="Komentar"
-          icon={<MessageCircle className="h-6 w-6 text-foreground" />}
+          icon={<MessageCircle className="h-7 w-7 text-white" />}
           label={formatCount(clip.comments)}
         />
         <RailBtn
@@ -261,7 +261,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
           ariaLabel="Simpan"
           icon={
             <Bookmark
-              className={cn("h-6 w-6", saved ? "fill-tikcyan text-tikcyan" : "text-foreground")}
+              className={cn("h-7 w-7", saved ? "fill-tikcyan text-tikcyan" : "text-white")}
             />
           }
           label={formatCount(7273 + (saved ? 1 : 0))}
@@ -269,14 +269,14 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
         <RailBtn
           onClick={handleShare}
           ariaLabel="Bagikan"
-          icon={<Share2 className="h-6 w-6 text-foreground" />}
+          icon={<Share2 className="h-7 w-7 text-white" />}
           label={formatCount(shareCount)}
         />
 
         <button
           onClick={() => toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" })}
           aria-label={`Suara: ${clip.song}`}
-          className="mt-2 h-11 w-11 animate-spin-slow overflow-hidden rounded-full border border-border bg-gradient-to-br from-tikpink to-tikcyan p-0.5 active:scale-90 cursor-pointer"
+          className="mt-1 h-12 w-12 animate-spin-slow overflow-hidden rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-0.5 active:scale-90 cursor-pointer"
         >
           <img src={clip.avatar} alt="" aria-hidden className="h-full w-full rounded-full object-cover" />
         </button>
@@ -302,12 +302,12 @@ function RailBtn({
     <button
       onClick={onClick}
       aria-label={ariaLabel}
-      className="flex flex-col items-center gap-1 active:scale-90 transition cursor-pointer"
+      className="flex flex-col items-center gap-0.5 active:scale-90 transition cursor-pointer group"
     >
-      <span className="grid h-12 w-12 place-items-center rounded-full bg-secondary hover:bg-secondary/70">
+      <span className="grid h-12 w-12 place-items-center rounded-full bg-black/40 text-white transition group-hover:bg-black/60">
         {icon}
       </span>
-      <span className="text-xs font-semibold text-foreground/90">{label}</span>
+      <span className="text-xs font-bold text-white/90 drop-shadow">{label}</span>
     </button>
   );
 }
