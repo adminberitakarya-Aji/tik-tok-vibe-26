@@ -304,10 +304,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
         />
 
         <DiscButton
-          onClick={() => {
-            setDiscPop((n) => n + 1);
-            toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" });
-          }}
+          onClick={() => toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" })}
           ariaLabel={`Suara: ${clip.song}`}
           src={clip.avatar}
         />
