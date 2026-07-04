@@ -348,14 +348,14 @@ function RailBtn({
         pressing && "scale-90",
       )}
     >
-      <span
-        className={cn(
-          "relative grid h-12 w-12 place-items-center rounded-full bg-black/40 text-white transition-all duration-200 ease-out",
-          "group-hover:bg-black/60 group-hover:scale-110 group-active:scale-95",
-          isLike && active && "bg-tikpink/20",
-          isSave && active && "bg-tikcyan/20",
-        )}
-      >
+        <span
+          className={cn(
+            "relative grid h-12 w-12 place-items-center rounded-full bg-black/40 text-white transition-all duration-200 ease-out",
+            "group-hover:bg-black/60 group-hover:scale-110",
+            isLike && active && "bg-tikpink/20",
+            isSave && active && "bg-tikcyan/20",
+          )}
+        >
         {isLike && active && (
           <span
             key={`ring-${animate}`}
