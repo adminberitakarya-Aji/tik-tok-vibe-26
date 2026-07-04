@@ -76,7 +76,10 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
     });
 
   const handleSave = () => {
-    setSaved((s) => !s);
+    setSaved((s) => {
+      toast.success(s ? "Dihapus dari simpanan" : "Disimpan ke koleksi");
+      return !s;
+    });
     setSaveBurst((n) => n + 1);
   };
 
