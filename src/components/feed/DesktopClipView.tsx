@@ -62,7 +62,10 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
     }
   }, [muted]);
 
-  const toggleLike = () => setLiked((l) => !l);
+  const toggleLike = () => {
+    setLiked((l) => !l);
+    setLikeBurst((n) => n + 1);
+  };
   const togglePlay = () => setPaused((p) => !p);
 
   const handleFollow = () =>
@@ -72,11 +75,15 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
       return n;
     });
 
-  const handleSave = () =>
-    setSaved((s) => {
-      toast.success(s ? "Dihapus dari simpanan" : "Disimpan ke koleksi");
-      return !s;
-    });
+  const handleSave = () => {
+    setSaved((s) => !s);
+    setSaveBurst((n) => n + 1);
+  };
+
+  const openComments = () => {
+    setCommentPop((n) => n + 1);
+    setCommentsOpen(true);
+  };
 
   const handleShare = async () => {
     const url =
