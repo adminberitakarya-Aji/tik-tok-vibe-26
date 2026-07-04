@@ -318,22 +318,66 @@ function RailBtn({
   label,
   onClick,
   ariaLabel,
+  animate = 0,
+  variant,
+  active,
 }: {
   icon: React.ReactNode;
   label: string;
   onClick?: () => void;
   ariaLabel: string;
+  animate?: number;
+  variant?: "like" | "save";
+  active?: boolean;
 }) {
+  const [pressing, setPressing] = useState(false);
+  const isLike = variant === "like";
+  const isSave = variant === "save";
+  const iconKey = animate ? `${variant ?? "btn"}-${animate}` : "icon";
+
   return (
     <button
       onClick={onClick}
       aria-label={ariaLabel}
-      className="flex flex-col items-center gap-0.5 active:scale-90 transition cursor-pointer group"
+      aria-pressed={active}
+      onPointerDown={() => setPressing(true)}
+      onPointerUp={() => setPressing(false)}
+      onPointerLeave={() => setPressing(false)}
+      className={cn(
+        "relative flex flex-col items-center gap-0.5 transition-transform cursor-pointer group",
+        pressing && "scale-90",
+      )}
     >
-      <span className="grid h-12 w-12 place-items-center rounded-full bg-black/40 text-white transition group-hover:bg-black/60">
-        {icon}
+      <span
+        className={cn(
+          "relative grid h-12 w-12 place-items-center rounded-full bg-black/40 text-white transition-all duration-200 ease-out",
+          "group-hover:bg-black/60 group-hover:scale-110 group-active:scale-95",
+          isLike && active && "bg-tikpink/20",
+          isSave && active && "bg-tikcyan/20",
+        )}
+      >
+        {isLike && active && (
+          <span
+            key={`ring-${animate}`}
+            className="pointer-events-none absolute inset-0 rounded-full border-2 border-tikpink/60 animate-ripple-ring"
+            aria-hidden
+          />
+        )}
+        <span
+          key={iconKey}
+          className={cn(
+            "inline-grid place-items-center",
+            isLike && animate > 0 && "animate-like-burst",
+            isSave && animate > 0 && "animate-save-bounce",
+            !isLike && !isSave && animate > 0 && "animate-comment-pop",
+          )}
+        >
+          {icon}
+        </span>
       </span>
-      <span className="text-xs font-bold text-white/90 drop-shadow">{label}</span>
+      <span className="text-xs font-bold text-white/90 drop-shadow transition-colors group-hover:text-white">
+        {label}
+      </span>
     </button>
   );
 }
