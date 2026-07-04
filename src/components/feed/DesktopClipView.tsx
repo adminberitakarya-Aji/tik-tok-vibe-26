@@ -103,6 +103,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
         toast.success("Tautan disalin");
       }
       setShareCount((c) => c + 1);
+      setSharePop((n) => n + 1);
     } catch {
       /* cancelled */
     }
