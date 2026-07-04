@@ -333,12 +333,13 @@ function RailBtn({
   onClick?: () => void;
   ariaLabel: string;
   animate?: number;
-  variant?: "like" | "save";
+  variant?: "like" | "save" | "share";
   active?: boolean;
 }) {
   const [pressing, setPressing] = useState(false);
   const isLike = variant === "like";
   const isSave = variant === "save";
+  const isShare = variant === "share";
   const iconKey = animate ? `${variant ?? "btn"}-${animate}` : "icon";
 
   return (
@@ -375,7 +376,8 @@ function RailBtn({
             "inline-grid place-items-center",
             isLike && animate > 0 && "animate-like-burst",
             isSave && animate > 0 && "animate-save-bounce",
-            !isLike && !isSave && animate > 0 && "animate-comment-pop",
+            isShare && animate > 0 && "animate-share-pop",
+            !isLike && !isSave && !isShare && animate > 0 && "animate-comment-pop",
           )}
         >
           {icon}
@@ -383,6 +385,46 @@ function RailBtn({
       </span>
       <span className="text-xs font-bold text-white/90 drop-shadow transition-colors group-hover:text-white">
         {label}
+      </span>
+    </button>
+  );
+}
+
+function DiscButton({
+  onClick,
+  ariaLabel,
+  src,
+}: {
+  onClick?: () => void;
+  ariaLabel: string;
+  src: string;
+}) {
+  const [pressing, setPressing] = useState(false);
+  const [pop, setPop] = useState(0);
+
+  return (
+    <button
+      onClick={() => {
+        setPop((n) => n + 1);
+        onClick?.();
+      }}
+      aria-label={ariaLabel}
+      onPointerDown={() => setPressing(true)}
+      onPointerUp={() => setPressing(false)}
+      onPointerLeave={() => setPressing(false)}
+      className={cn(
+        "relative mt-1 grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-0.5 transition-transform cursor-pointer group",
+        pressing && "scale-90",
+      )}
+    >
+      <span
+        key={pop ? `disc-${pop}` : "disc"}
+        className={cn(
+          "relative block h-full w-full overflow-hidden rounded-full animate-spin-slow",
+          pop > 0 && "animate-disc-pop",
+        )}
+      >
+        <img src={src} alt="" aria-hidden className="h-full w-full rounded-full object-cover" />
       </span>
     </button>
   );
