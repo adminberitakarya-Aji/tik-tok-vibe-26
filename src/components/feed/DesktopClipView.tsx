@@ -256,25 +256,38 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
         <RailBtn
           onClick={toggleLike}
           ariaLabel="Suka"
+          animate={likeBurst}
+          variant="like"
+          active={liked}
           icon={
             <Heart
-              className={cn("h-7 w-7", liked ? "fill-tikpink text-tikpink" : "text-white")}
+              className={cn(
+                "h-7 w-7 transition-colors",
+                liked ? "fill-tikpink text-tikpink" : "text-white",
+              )}
             />
           }
           label={formatCount(clip.likes + (liked ? 1 : 0))}
         />
         <RailBtn
-          onClick={() => setCommentsOpen(true)}
+          onClick={openComments}
           ariaLabel="Komentar"
+          animate={commentPop}
           icon={<MessageCircle className="h-7 w-7 text-white" />}
           label={formatCount(clip.comments)}
         />
         <RailBtn
           onClick={handleSave}
           ariaLabel="Simpan"
+          animate={saveBurst}
+          variant="save"
+          active={saved}
           icon={
             <Bookmark
-              className={cn("h-7 w-7", saved ? "fill-tikcyan text-tikcyan" : "text-white")}
+              className={cn(
+                "h-7 w-7 transition-colors",
+                saved ? "fill-tikcyan text-tikcyan" : "text-white",
+              )}
             />
           }
           label={formatCount(7273 + (saved ? 1 : 0))}
