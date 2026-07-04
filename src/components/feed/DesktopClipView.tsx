@@ -298,17 +298,20 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
         <RailBtn
           onClick={handleShare}
           ariaLabel="Bagikan"
+          animate={sharePop}
+          variant="share"
           icon={<Share2 className="h-7 w-7 text-white" />}
           label={formatCount(shareCount)}
         />
 
-        <button
-          onClick={() => toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" })}
-          aria-label={`Suara: ${clip.song}`}
-          className="mt-1 h-12 w-12 animate-spin-slow overflow-hidden rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-0.5 active:scale-90 cursor-pointer"
-        >
-          <img src={clip.avatar} alt="" aria-hidden className="h-full w-full rounded-full object-cover" />
-        </button>
+        <DiscButton
+          onClick={() => {
+            setDiscPop((n) => n + 1);
+            toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" });
+          }}
+          ariaLabel={`Suara: ${clip.song}`}
+          src={clip.avatar}
+        />
       </div>
 
       <CommentSheet clip={clip} open={commentsOpen} onOpenChange={setCommentsOpen} />
