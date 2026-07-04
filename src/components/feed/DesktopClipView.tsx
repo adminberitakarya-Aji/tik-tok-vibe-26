@@ -44,6 +44,9 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
   const [retryKey, setRetryKey] = useState(0);
   const [progress, setProgress] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [likeBurst, setLikeBurst] = useState(0);
+  const [saveBurst, setSaveBurst] = useState(0);
+  const [commentPop, setCommentPop] = useState(0);
 
   useEffect(() => {
     const v = videoRef.current;
