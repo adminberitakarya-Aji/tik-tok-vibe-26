@@ -47,6 +47,8 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
   const [likeBurst, setLikeBurst] = useState(0);
   const [saveBurst, setSaveBurst] = useState(0);
   const [commentPop, setCommentPop] = useState(0);
+  const [sharePop, setSharePop] = useState(0);
+  const [discPop, setDiscPop] = useState(0);
 
   useEffect(() => {
     const v = videoRef.current;
