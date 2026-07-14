@@ -195,23 +195,28 @@ function ProfilePage() {
 
           {/* Tabs */}
           <div className="mt-8 border-b border-border">
-            <div className="flex items-center justify-around sm:justify-start sm:gap-8">
+            <div role="tablist" aria-label="Konten profil" className="flex items-center justify-around sm:justify-start sm:gap-8">
               {tabs.map((t) => {
                 const Icon = t.icon;
                 const active = tab === t.id;
                 return (
                   <button
                     key={t.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    aria-controls={`panel-${t.id}`}
+                    id={`tab-${t.id}`}
                     onClick={() => setTab(t.id)}
                     className={cn(
-                      "relative flex items-center gap-1.5 px-2 py-3 text-sm font-semibold transition",
+                      "relative flex items-center gap-1.5 px-2 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan rounded",
                       active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                     )}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-4 w-4" aria-hidden />
                     {t.label}
                     {active && (
-                      <span className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground" />
+                      <span aria-hidden className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground" />
                     )}
                   </button>
                 );
