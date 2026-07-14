@@ -381,6 +381,7 @@ function ChatView({
             value={draft}
             onChange={(e) => onDraftChange(e.target.value)}
             placeholder={`Kirim pesan ke ${conv.username}`}
+            aria-label={`Tulis pesan untuk ${conv.username}`}
             className="flex-1 bg-transparent py-2 text-sm outline-none placeholder:text-muted-foreground"
           />
           <button
