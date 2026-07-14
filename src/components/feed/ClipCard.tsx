@@ -57,6 +57,9 @@ export function ClipCard({ clip }: { clip: Clip }) {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [shareCount, setShareCount] = useState(clip.shares);
   const [likeBurst, setLikeBurst] = useState(0);
+  const [sharePop, setSharePop] = useState(0);
+  const [discPop, setDiscPop] = useState(0);
+  const [discPressing, setDiscPressing] = useState(false);
   const [floatHearts, setFloatHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -134,11 +137,13 @@ export function ClipCard({ clip }: { clip: Clip }) {
       if (typeof navigator !== "undefined" && navigator.share) {
         await navigator.share(shareData);
         setShareCount((c) => c + 1);
+        setSharePop((n) => n + 1);
         return;
       }
       await navigator.clipboard.writeText(url);
       toast.success("Tautan disalin");
       setShareCount((c) => c + 1);
+      setSharePop((n) => n + 1);
     } catch {
       // user cancelled share — no-op
     }
@@ -317,22 +322,44 @@ export function ClipCard({ clip }: { clip: Clip }) {
         <ActionBtn
           onClick={handleShare}
           ariaLabel="Bagikan"
-          icon={<Share2 className="h-8 w-8 text-white" />}
+          icon={
+            <Share2
+              key={sharePop}
+              className={cn(
+                "h-8 w-8 text-white transition-transform",
+                sharePop > 0 && "animate-share-pop",
+              )}
+            />
+          }
           label={formatCount(shareCount)}
         />
 
         {/* Spinning disc — opens sound */}
         <button
-          onClick={() => toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" })}
+          onClick={() => {
+            setDiscPop((n) => n + 1);
+            toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" });
+          }}
+          onPointerDown={() => setDiscPressing(true)}
+          onPointerUp={() => setDiscPressing(false)}
+          onPointerLeave={() => setDiscPressing(false)}
+          onPointerCancel={() => setDiscPressing(false)}
           aria-label={`Suara: ${clip.song}`}
-          className="mt-2 h-12 w-12 animate-spin-slow rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 active:scale-90 transition cursor-pointer"
+          className={cn(
+            "mt-2 h-12 w-12 rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 transition-transform duration-150 cursor-pointer hover:scale-110 active:scale-90",
+            discPressing && "scale-90",
+            discPop > 0 && "animate-disc-pop",
+          )}
+          key={discPop}
         >
-          <img
-            src={clip.avatar}
-            alt=""
-            aria-hidden
-            className="h-full w-full rounded-full border-2 border-black object-cover"
-          />
+          <div className="h-full w-full animate-spin-slow rounded-full">
+            <img
+              src={clip.avatar}
+              alt=""
+              aria-hidden
+              className="h-full w-full rounded-full border-2 border-black object-cover"
+            />
+          </div>
         </button>
       </div>
 
