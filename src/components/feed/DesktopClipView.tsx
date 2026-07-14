@@ -174,18 +174,22 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
 
           {/* Mute + more (top corners) */}
           <button
+            type="button"
             onClick={() => setMuted(!muted)}
-            aria-label={muted ? "Suarakan" : "Bisukan"}
-            className="absolute left-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer"
+            aria-label={muted ? "Suarakan video" : "Bisukan video"}
+            aria-pressed={!muted}
+            className="absolute left-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
           >
-            {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            {muted ? <VolumeX className="h-4 w-4" aria-hidden /> : <Volume2 className="h-4 w-4" aria-hidden />}
           </button>
           <button
-            aria-label="Lainnya"
+            type="button"
+            aria-label="Opsi lain untuk video"
+            aria-haspopup="menu"
             onClick={() => toast("Opsi video")}
-            className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer"
+            className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="h-4 w-4" aria-hidden />
           </button>
 
           {/* Caption overlay (bottom-left of video, like tiktok.com) */}
