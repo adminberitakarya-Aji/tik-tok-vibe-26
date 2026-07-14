@@ -157,7 +157,7 @@ function InboxPage() {
               />
             </label>
           </div>
-          <ul className="flex-1 overflow-y-auto py-2">
+          <ul aria-label="Daftar percakapan" className="flex-1 overflow-y-auto py-2">
             {filtered.length === 0 && (
               <li className="px-4 py-8 text-center text-sm text-muted-foreground">
                 Tidak ada percakapan.
@@ -169,22 +169,26 @@ function InboxPage() {
               return (
                 <li key={c.handle}>
                   <button
+                    type="button"
                     onClick={() =>
                       navigate({ search: { chat: c.handle }, replace: true })
                     }
+                    aria-current={isActive ? "true" : undefined}
+                    aria-label={`Percakapan dengan ${c.username}${c.unread > 0 ? `, ${c.unread} pesan belum dibaca` : ""}${c.online ? ", sedang aktif" : ""}`}
                     className={cn(
-                      "flex w-full items-center gap-3 px-3 py-2.5 text-left transition",
+                      "flex w-full items-center gap-3 px-3 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan",
                       isActive ? "bg-secondary" : "hover:bg-secondary/60",
                     )}
                   >
                     <div className="relative shrink-0">
                       <img
                         src={c.avatar}
-                        alt={c.username}
+                        alt=""
+                        aria-hidden
                         className="h-12 w-12 rounded-full object-cover"
                       />
                       {c.online && (
-                        <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-tikcyan" />
+                        <span aria-hidden className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-tikcyan" />
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -205,7 +209,7 @@ function InboxPage() {
                           {last?.text ?? c.lastMessage}
                         </span>
                         {c.unread > 0 && (
-                          <span className="grid h-5 min-w-5 shrink-0 place-items-center rounded-full bg-tikpink px-1.5 text-[11px] font-bold text-primary-foreground">
+                          <span aria-hidden className="grid h-5 min-w-5 shrink-0 place-items-center rounded-full bg-tikpink px-1.5 text-[11px] font-bold text-primary-foreground">
                             {c.unread}
                           </span>
                         )}
