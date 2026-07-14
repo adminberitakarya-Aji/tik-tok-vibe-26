@@ -216,8 +216,11 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
                 ))}
               </p>
               <button
+                type="button"
                 onClick={() => setExpanded((e) => !e)}
-                className="mt-0.5 text-xs font-semibold text-white/70 hover:text-white cursor-pointer"
+                aria-expanded={expanded}
+                aria-label={expanded ? "Ringkas keterangan" : "Perlihatkan keterangan lengkap"}
+                className="mt-0.5 text-xs font-semibold text-white/70 hover:text-white cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan rounded"
               >
                 {expanded ? "lebih sedikit" : "selengkapnya"}
               </button>
