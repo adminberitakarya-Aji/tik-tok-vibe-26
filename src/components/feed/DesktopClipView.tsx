@@ -115,7 +115,11 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
   };
 
   return (
-    <div className="flex items-end gap-3">
+    <article
+      aria-label={`Klip dari ${clip.username}: ${clip.caption}`}
+      aria-roledescription="video klip"
+      className="flex items-end gap-3"
+    >
       {/* Video stage */}
       <div className="flex flex-col">
         <div
@@ -130,6 +134,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
             playsInline
             preload="metadata"
             muted={muted}
+            aria-label={`Video oleh ${clip.username}. ${paused ? "Dijeda" : "Diputar"}. Ketuk untuk ${paused ? "putar" : "jeda"}.`}
             onClick={togglePlay}
             onLoadedData={() => setLoaded(true)}
             onError={() => setErrored(true)}
