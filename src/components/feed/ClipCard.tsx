@@ -322,22 +322,48 @@ export function ClipCard({ clip }: { clip: Clip }) {
         <ActionBtn
           onClick={handleShare}
           ariaLabel="Bagikan"
-          icon={<Share2 className="h-8 w-8 text-white" />}
+          icon={
+            <Share2
+              key={sharePop}
+              className={cn(
+                "h-8 w-8 text-white transition-transform",
+                sharePop > 0 && "animate-share-pop",
+              )}
+            />
+          }
           label={formatCount(shareCount)}
         />
 
         {/* Spinning disc — opens sound */}
         <button
-          onClick={() => toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" })}
+          onClick={() => {
+            setDiscPop((n) => n + 1);
+            toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" });
+          }}
+          onPointerDown={() => setDiscPressing(true)}
+          onPointerUp={() => setDiscPressing(false)}
+          onPointerLeave={() => setDiscPressing(false)}
+          onPointerCancel={() => setDiscPressing(false)}
           aria-label={`Suara: ${clip.song}`}
-          className="mt-2 h-12 w-12 animate-spin-slow rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 active:scale-90 transition cursor-pointer"
+          className={cn(
+            "group mt-2 h-12 w-12 rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 transition-transform duration-150 cursor-pointer active:scale-90",
+            discPressing && "scale-90",
+          )}
         >
-          <img
-            src={clip.avatar}
-            alt=""
-            aria-hidden
-            className="h-full w-full rounded-full border-2 border-black object-cover"
-          />
+          <div
+            key={discPop}
+            className={cn(
+              "h-full w-full animate-spin-slow rounded-full transition-transform duration-200 group-hover:scale-110",
+              discPop > 0 && "animate-disc-pop",
+            )}
+          >
+            <img
+              src={clip.avatar}
+              alt=""
+              aria-hidden
+              className="h-full w-full rounded-full border-2 border-black object-cover"
+            />
+          </div>
         </button>
       </div>
 
