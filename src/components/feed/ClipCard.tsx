@@ -383,7 +383,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
       </div>
 
       <CommentSheet clip={clip} open={commentsOpen} onOpenChange={setCommentsOpen} />
-    </div>
+    </article>
   );
 }
 
