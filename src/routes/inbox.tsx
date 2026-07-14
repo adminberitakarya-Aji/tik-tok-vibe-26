@@ -312,7 +312,14 @@ function ChatView({
       </header>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-4 md:px-6">
+      <div
+        ref={scrollRef}
+        role="log"
+        aria-live="polite"
+        aria-relevant="additions"
+        aria-label={`Percakapan dengan ${conv.username}`}
+        className="flex-1 overflow-y-auto px-3 py-4 md:px-6"
+      >
         <div className="mx-auto flex max-w-2xl flex-col gap-2">
           {messages.map((msg, i) => {
             const prev = messages[i - 1];
@@ -330,6 +337,7 @@ function ChatView({
                 )}
                 <div className={cn("flex", mine ? "justify-end" : "justify-start")}>
                   <div
+                    aria-label={`${mine ? "Kamu" : conv.username}: ${msg.text}`}
                     className={cn(
                       "max-w-[78%] rounded-2xl px-4 py-2 text-sm leading-snug",
                       mine
