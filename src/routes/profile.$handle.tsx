@@ -123,9 +123,12 @@ function ProfilePage() {
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <button
+                  type="button"
                   onClick={() => setFollowing((f) => !f)}
+                  aria-pressed={following}
+                  aria-label={following ? `Berhenti mengikuti ${user.username}` : `Ikuti ${user.username}`}
                   className={cn(
-                    "rounded-md px-6 py-2 text-sm font-semibold transition",
+                    "rounded-md px-6 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan",
                     following
                       ? "border border-border bg-secondary text-foreground hover:bg-secondary/70"
                       : "bg-tikpink text-primary-foreground hover:opacity-90",
@@ -136,21 +139,25 @@ function ProfilePage() {
                 <Link
                   to="/inbox"
                   search={{ chat: user.handle.replace(/^@/, "") }}
-                  className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/70"
+                  aria-label={`Kirim pesan ke ${user.username}`}
+                  className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
                 >
                   Pesan
                 </Link>
                 <button
-                  aria-label="Bagikan"
-                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70"
+                  type="button"
+                  aria-label={`Bagikan profil ${user.username}`}
+                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
                 >
-                  <Share2 className="h-4 w-4" />
+                  <Share2 className="h-4 w-4" aria-hidden />
                 </button>
                 <button
-                  aria-label="Lainnya"
-                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70"
+                  type="button"
+                  aria-label="Opsi profil lainnya"
+                  aria-haspopup="menu"
+                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
                 >
-                  <MoreHorizontal className="h-4 w-4" />
+                  <MoreHorizontal className="h-4 w-4" aria-hidden />
                 </button>
               </div>
 
@@ -188,23 +195,28 @@ function ProfilePage() {
 
           {/* Tabs */}
           <div className="mt-8 border-b border-border">
-            <div className="flex items-center justify-around sm:justify-start sm:gap-8">
+            <div role="tablist" aria-label="Konten profil" className="flex items-center justify-around sm:justify-start sm:gap-8">
               {tabs.map((t) => {
                 const Icon = t.icon;
                 const active = tab === t.id;
                 return (
                   <button
                     key={t.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    aria-controls={`panel-${t.id}`}
+                    id={`tab-${t.id}`}
                     onClick={() => setTab(t.id)}
                     className={cn(
-                      "relative flex items-center gap-1.5 px-2 py-3 text-sm font-semibold transition",
+                      "relative flex items-center gap-1.5 px-2 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan rounded",
                       active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                     )}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-4 w-4" aria-hidden />
                     {t.label}
                     {active && (
-                      <span className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground" />
+                      <span aria-hidden className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground" />
                     )}
                   </button>
                 );
@@ -214,7 +226,12 @@ function ProfilePage() {
 
           {/* Grid */}
           {tab === "videos" ? (
-            <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+            <div
+              id="panel-videos"
+              role="tabpanel"
+              aria-labelledby="tab-videos"
+              className="mt-4 grid grid-cols-3 gap-2 sm:gap-3"
+            >
               {userVideos.map((c) => (
                 <div
                   key={c.id}
@@ -225,6 +242,7 @@ function ProfilePage() {
                     muted
                     playsInline
                     preload="metadata"
+                    aria-label={`Video: ${c.caption}`}
                     className="h-full w-full object-cover transition group-hover:scale-[1.02]"
                     onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
                     onMouseLeave={(e) => {
@@ -236,15 +254,20 @@ function ProfilePage() {
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/70 to-transparent p-2 text-xs font-semibold text-white">
                     <span className="line-clamp-2">{c.caption}</span>
                   </div>
-                  <div className="pointer-events-none absolute bottom-2 right-2 flex items-center gap-1 text-xs font-bold text-white drop-shadow">
-                    <Play className="h-3 w-3 fill-white" />
+                  <div
+                    className="pointer-events-none absolute bottom-2 right-2 flex items-center gap-1 text-xs font-bold text-white drop-shadow"
+                    aria-label={`${formatCount(c.likes)} suka`}
+                  >
+                    <Play className="h-3 w-3 fill-white" aria-hidden />
                     {formatCount(c.likes)}
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <EmptyState tab={tab} />
+            <div id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`}>
+              <EmptyState tab={tab} />
+            </div>
           )}
         </div>
       </main>

@@ -37,11 +37,15 @@ const items: Item[] = [
 
 export function SideNav() {
   return (
-    <aside className="hidden md:flex h-[100dvh] w-60 lg:w-64 shrink-0 flex-col overflow-y-auto border-r border-border bg-background px-3 py-4">
-      <Link to="/" className="flex items-center gap-2 px-3 pb-4">
+    <aside
+      aria-label="Navigasi utama"
+      className="hidden md:flex h-[100dvh] w-60 lg:w-64 shrink-0 flex-col overflow-y-auto border-r border-border bg-background px-3 py-4"
+    >
+      <Link to="/" aria-label="Klip - beranda" className="flex items-center gap-2 px-3 pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan rounded-md">
         <img
           src={klipLogo}
-          alt="Klip"
+          alt=""
+          aria-hidden
           width={32}
           height={32}
           className="h-8 w-8 drop-shadow-[0_0_12px_rgba(254,44,85,0.35)]"
@@ -51,13 +55,16 @@ export function SideNav() {
         </span>
       </Link>
 
-      <div className="mb-2 flex items-center gap-2 rounded-full bg-secondary px-4 py-2">
-        <Search className="h-4 w-4 text-muted-foreground" />
+      <label className="mb-2 flex items-center gap-2 rounded-full bg-secondary px-4 py-2 focus-within:ring-2 focus-within:ring-tikcyan">
+        <Search className="h-4 w-4 text-muted-foreground" aria-hidden />
+        <span className="sr-only">Cari</span>
         <input
+          type="search"
           placeholder="Cari"
+          aria-label="Cari kreator, lagu, atau tag"
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
-      </div>
+      </label>
 
       <NavList />
 
@@ -75,7 +82,7 @@ export function SideNav() {
 function NavList() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <nav className="mt-2 flex flex-col">
+    <nav aria-label="Menu" className="mt-2 flex flex-col">
       {items.map((it) => {
         const active =
           it.to === "/"
@@ -84,12 +91,12 @@ function NavList() {
               ? pathname.startsWith(it.to.split("/$")[0])
               : false;
         const className = cn(
-          "flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-[15px] font-semibold transition",
+          "flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-[15px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan",
           active ? "text-tikpink" : "text-foreground/85 hover:bg-secondary",
         );
         const inner = (
           <>
-            <it.icon className="h-6 w-6" />
+            <it.icon className="h-6 w-6" aria-hidden />
             {it.label}
           </>
         );
@@ -99,6 +106,7 @@ function NavList() {
               key={it.label}
               to={it.to as "/"}
               params={it.params as never}
+              aria-current={active ? "page" : undefined}
               className={className}
             >
               {inner}
@@ -106,7 +114,7 @@ function NavList() {
           );
         }
         return (
-          <button key={it.label} className={className}>
+          <button key={it.label} type="button" className={className}>
             {inner}
           </button>
         );

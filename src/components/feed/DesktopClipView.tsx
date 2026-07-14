@@ -115,7 +115,11 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
   };
 
   return (
-    <div className="flex items-end gap-3">
+    <article
+      aria-label={`Klip dari ${clip.username}: ${clip.caption}`}
+      aria-roledescription="video klip"
+      className="flex items-end gap-3"
+    >
       {/* Video stage */}
       <div className="flex flex-col">
         <div
@@ -130,6 +134,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
             playsInline
             preload="metadata"
             muted={muted}
+            aria-label={`Video oleh ${clip.username}. ${paused ? "Dijeda" : "Diputar"}. Ketuk untuk ${paused ? "putar" : "jeda"}.`}
             onClick={togglePlay}
             onLoadedData={() => setLoaded(true)}
             onError={() => setErrored(true)}
@@ -169,18 +174,22 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
 
           {/* Mute + more (top corners) */}
           <button
+            type="button"
             onClick={() => setMuted(!muted)}
-            aria-label={muted ? "Suarakan" : "Bisukan"}
-            className="absolute left-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer"
+            aria-label={muted ? "Suarakan video" : "Bisukan video"}
+            aria-pressed={!muted}
+            className="absolute left-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
           >
-            {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            {muted ? <VolumeX className="h-4 w-4" aria-hidden /> : <Volume2 className="h-4 w-4" aria-hidden />}
           </button>
           <button
-            aria-label="Lainnya"
+            type="button"
+            aria-label="Opsi lain untuk video"
+            aria-haspopup="menu"
             onClick={() => toast("Opsi video")}
-            className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer"
+            className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="h-4 w-4" aria-hidden />
           </button>
 
           {/* Caption overlay (bottom-left of video, like tiktok.com) */}
@@ -207,8 +216,11 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
                 ))}
               </p>
               <button
+                type="button"
                 onClick={() => setExpanded((e) => !e)}
-                className="mt-0.5 text-xs font-semibold text-white/70 hover:text-white cursor-pointer"
+                aria-expanded={expanded}
+                aria-label={expanded ? "Ringkas keterangan" : "Perlihatkan keterangan lengkap"}
+                className="mt-0.5 text-xs font-semibold text-white/70 hover:text-white cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan rounded"
               >
                 {expanded ? "lebih sedikit" : "selengkapnya"}
               </button>
@@ -311,7 +323,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
       </div>
 
       <CommentSheet clip={clip} open={commentsOpen} onOpenChange={setCommentsOpen} />
-    </div>
+    </article>
   );
 }
 
@@ -340,6 +352,7 @@ function RailBtn({
 
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-label={ariaLabel}
       aria-pressed={active}
@@ -347,7 +360,7 @@ function RailBtn({
       onPointerUp={() => setPressing(false)}
       onPointerLeave={() => setPressing(false)}
       className={cn(
-        "relative flex flex-col items-center gap-0.5 transition-transform cursor-pointer group",
+        "relative flex flex-col items-center gap-0.5 transition-transform cursor-pointer group rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan",
         pressing && "scale-90",
       )}
     >
@@ -400,6 +413,7 @@ function DiscButton({
 
   return (
     <button
+      type="button"
       onClick={() => {
         setPop((n) => n + 1);
         onClick?.();
@@ -409,7 +423,7 @@ function DiscButton({
       onPointerUp={() => setPressing(false)}
       onPointerLeave={() => setPressing(false)}
       className={cn(
-        "relative mt-1 grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-0.5 transition-transform cursor-pointer group",
+        "relative mt-1 grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-0.5 transition-transform cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan focus-visible:ring-offset-2 focus-visible:ring-offset-black",
         pressing && "scale-90",
       )}
     >

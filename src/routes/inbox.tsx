@@ -144,17 +144,20 @@ function InboxPage() {
             </button>
           </div>
           <div className="px-3 pt-3">
-            <div className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2">
-              <Search className="h-4 w-4 text-muted-foreground" />
+            <label className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2 focus-within:ring-2 focus-within:ring-tikcyan">
+              <Search className="h-4 w-4 text-muted-foreground" aria-hidden />
+              <span className="sr-only">Cari percakapan</span>
               <input
+                type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Cari"
+                aria-label="Cari percakapan"
                 className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
               />
-            </div>
+            </label>
           </div>
-          <ul className="flex-1 overflow-y-auto py-2">
+          <ul aria-label="Daftar percakapan" className="flex-1 overflow-y-auto py-2">
             {filtered.length === 0 && (
               <li className="px-4 py-8 text-center text-sm text-muted-foreground">
                 Tidak ada percakapan.
@@ -166,22 +169,26 @@ function InboxPage() {
               return (
                 <li key={c.handle}>
                   <button
+                    type="button"
                     onClick={() =>
                       navigate({ search: { chat: c.handle }, replace: true })
                     }
+                    aria-current={isActive ? "true" : undefined}
+                    aria-label={`Percakapan dengan ${c.username}${c.unread > 0 ? `, ${c.unread} pesan belum dibaca` : ""}${c.online ? ", sedang aktif" : ""}`}
                     className={cn(
-                      "flex w-full items-center gap-3 px-3 py-2.5 text-left transition",
+                      "flex w-full items-center gap-3 px-3 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan",
                       isActive ? "bg-secondary" : "hover:bg-secondary/60",
                     )}
                   >
                     <div className="relative shrink-0">
                       <img
                         src={c.avatar}
-                        alt={c.username}
+                        alt=""
+                        aria-hidden
                         className="h-12 w-12 rounded-full object-cover"
                       />
                       {c.online && (
-                        <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-tikcyan" />
+                        <span aria-hidden className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-tikcyan" />
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -202,7 +209,7 @@ function InboxPage() {
                           {last?.text ?? c.lastMessage}
                         </span>
                         {c.unread > 0 && (
-                          <span className="grid h-5 min-w-5 shrink-0 place-items-center rounded-full bg-tikpink px-1.5 text-[11px] font-bold text-primary-foreground">
+                          <span aria-hidden className="grid h-5 min-w-5 shrink-0 place-items-center rounded-full bg-tikpink px-1.5 text-[11px] font-bold text-primary-foreground">
                             {c.unread}
                           </span>
                         )}
@@ -305,7 +312,14 @@ function ChatView({
       </header>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-4 md:px-6">
+      <div
+        ref={scrollRef}
+        role="log"
+        aria-live="polite"
+        aria-relevant="additions"
+        aria-label={`Percakapan dengan ${conv.username}`}
+        className="flex-1 overflow-y-auto px-3 py-4 md:px-6"
+      >
         <div className="mx-auto flex max-w-2xl flex-col gap-2">
           {messages.map((msg, i) => {
             const prev = messages[i - 1];
@@ -323,6 +337,7 @@ function ChatView({
                 )}
                 <div className={cn("flex", mine ? "justify-end" : "justify-start")}>
                   <div
+                    aria-label={`${mine ? "Kamu" : conv.username}: ${msg.text}`}
                     className={cn(
                       "max-w-[78%] rounded-2xl px-4 py-2 text-sm leading-snug",
                       mine
@@ -366,6 +381,7 @@ function ChatView({
             value={draft}
             onChange={(e) => onDraftChange(e.target.value)}
             placeholder={`Kirim pesan ke ${conv.username}`}
+            aria-label={`Tulis pesan untuk ${conv.username}`}
             className="flex-1 bg-transparent py-2 text-sm outline-none placeholder:text-muted-foreground"
           />
           <button

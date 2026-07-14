@@ -156,8 +156,10 @@ export function ClipCard({ clip }: { clip: Clip }) {
   };
 
   return (
-    <div
+    <article
       ref={containerRef}
+      aria-label={`Klip dari ${clip.username}: ${clip.caption}`}
+      aria-roledescription="video klip"
       className="snap-item relative h-full w-full overflow-hidden bg-black"
     >
       <video
@@ -168,6 +170,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
         muted={muted}
         playsInline
         preload="metadata"
+        aria-label={`Video oleh ${clip.username}. ${paused ? "Dijeda" : "Diputar"}. Ketuk untuk ${paused ? "putar" : "jeda"}, ketuk dua kali untuk suka.`}
         onClick={togglePlay}
         onDoubleClick={handleDoubleTap}
         onLoadedData={() => setLoaded(true)}
@@ -380,7 +383,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
       </div>
 
       <CommentSheet clip={clip} open={commentsOpen} onOpenChange={setCommentsOpen} />
-    </div>
+    </article>
   );
 }
 
