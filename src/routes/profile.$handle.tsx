@@ -123,9 +123,12 @@ function ProfilePage() {
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <button
+                  type="button"
                   onClick={() => setFollowing((f) => !f)}
+                  aria-pressed={following}
+                  aria-label={following ? `Berhenti mengikuti ${user.username}` : `Ikuti ${user.username}`}
                   className={cn(
-                    "rounded-md px-6 py-2 text-sm font-semibold transition",
+                    "rounded-md px-6 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan",
                     following
                       ? "border border-border bg-secondary text-foreground hover:bg-secondary/70"
                       : "bg-tikpink text-primary-foreground hover:opacity-90",
@@ -136,21 +139,25 @@ function ProfilePage() {
                 <Link
                   to="/inbox"
                   search={{ chat: user.handle.replace(/^@/, "") }}
-                  className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/70"
+                  aria-label={`Kirim pesan ke ${user.username}`}
+                  className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-semibold hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
                 >
                   Pesan
                 </Link>
                 <button
-                  aria-label="Bagikan"
-                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70"
+                  type="button"
+                  aria-label={`Bagikan profil ${user.username}`}
+                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
                 >
-                  <Share2 className="h-4 w-4" />
+                  <Share2 className="h-4 w-4" aria-hidden />
                 </button>
                 <button
-                  aria-label="Lainnya"
-                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70"
+                  type="button"
+                  aria-label="Opsi profil lainnya"
+                  aria-haspopup="menu"
+                  className="grid h-9 w-9 place-items-center rounded-md border border-border bg-secondary hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan"
                 >
-                  <MoreHorizontal className="h-4 w-4" />
+                  <MoreHorizontal className="h-4 w-4" aria-hidden />
                 </button>
               </div>
 
