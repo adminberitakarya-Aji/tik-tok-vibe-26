@@ -321,7 +321,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
         />
         <ActionBtn
           onClick={handleShare}
-          ariaLabel="Bagikan"
+          ariaLabel={`Bagikan klip, ${formatCount(shareCount)} kali dibagikan`}
           icon={
             <Share2
               key={sharePop}
@@ -336,6 +336,7 @@ export function ClipCard({ clip }: { clip: Clip }) {
 
         {/* Spinning disc — opens sound */}
         <button
+          type="button"
           onClick={() => {
             setDiscPop((n) => n + 1);
             toast(`♫ ${clip.song}`, { description: "Gunakan suara ini" });
@@ -344,9 +345,10 @@ export function ClipCard({ clip }: { clip: Clip }) {
           onPointerUp={() => setDiscPressing(false)}
           onPointerLeave={() => setDiscPressing(false)}
           onPointerCancel={() => setDiscPressing(false)}
-          aria-label={`Suara: ${clip.song}`}
+          aria-label={`Gunakan suara ${clip.song} oleh ${clip.username}`}
           className={cn(
             "mt-2 h-12 w-12 rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 transition-transform duration-150 cursor-pointer hover:scale-110 active:scale-90",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan focus-visible:ring-offset-2 focus-visible:ring-offset-black",
             discPressing && "scale-90",
             discPop > 0 && "animate-disc-pop",
           )}
