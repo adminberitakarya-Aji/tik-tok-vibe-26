@@ -352,6 +352,7 @@ function RailBtn({
 
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-label={ariaLabel}
       aria-pressed={active}
@@ -359,7 +360,7 @@ function RailBtn({
       onPointerUp={() => setPressing(false)}
       onPointerLeave={() => setPressing(false)}
       className={cn(
-        "relative flex flex-col items-center gap-0.5 transition-transform cursor-pointer group",
+        "relative flex flex-col items-center gap-0.5 transition-transform cursor-pointer group rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan",
         pressing && "scale-90",
       )}
     >
