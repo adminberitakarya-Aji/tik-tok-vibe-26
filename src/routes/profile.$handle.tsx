@@ -226,7 +226,12 @@ function ProfilePage() {
 
           {/* Grid */}
           {tab === "videos" ? (
-            <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+            <div
+              id="panel-videos"
+              role="tabpanel"
+              aria-labelledby="tab-videos"
+              className="mt-4 grid grid-cols-3 gap-2 sm:gap-3"
+            >
               {userVideos.map((c) => (
                 <div
                   key={c.id}
@@ -237,6 +242,7 @@ function ProfilePage() {
                     muted
                     playsInline
                     preload="metadata"
+                    aria-label={`Video: ${c.caption}`}
                     className="h-full w-full object-cover transition group-hover:scale-[1.02]"
                     onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
                     onMouseLeave={(e) => {
@@ -248,15 +254,20 @@ function ProfilePage() {
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/70 to-transparent p-2 text-xs font-semibold text-white">
                     <span className="line-clamp-2">{c.caption}</span>
                   </div>
-                  <div className="pointer-events-none absolute bottom-2 right-2 flex items-center gap-1 text-xs font-bold text-white drop-shadow">
-                    <Play className="h-3 w-3 fill-white" />
+                  <div
+                    className="pointer-events-none absolute bottom-2 right-2 flex items-center gap-1 text-xs font-bold text-white drop-shadow"
+                    aria-label={`${formatCount(c.likes)} suka`}
+                  >
+                    <Play className="h-3 w-3 fill-white" aria-hidden />
                     {formatCount(c.likes)}
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <EmptyState tab={tab} />
+            <div id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`}>
+              <EmptyState tab={tab} />
+            </div>
           )}
         </div>
       </main>
