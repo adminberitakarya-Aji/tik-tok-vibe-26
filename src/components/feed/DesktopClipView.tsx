@@ -413,6 +413,7 @@ function DiscButton({
 
   return (
     <button
+      type="button"
       onClick={() => {
         setPop((n) => n + 1);
         onClick?.();
@@ -422,7 +423,7 @@ function DiscButton({
       onPointerUp={() => setPressing(false)}
       onPointerLeave={() => setPressing(false)}
       className={cn(
-        "relative mt-1 grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-0.5 transition-transform cursor-pointer group",
+        "relative mt-1 grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-0.5 transition-transform cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tikcyan focus-visible:ring-offset-2 focus-visible:ring-offset-black",
         pressing && "scale-90",
       )}
     >
