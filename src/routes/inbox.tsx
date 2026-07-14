@@ -144,15 +144,18 @@ function InboxPage() {
             </button>
           </div>
           <div className="px-3 pt-3">
-            <div className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2">
-              <Search className="h-4 w-4 text-muted-foreground" />
+            <label className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2 focus-within:ring-2 focus-within:ring-tikcyan">
+              <Search className="h-4 w-4 text-muted-foreground" aria-hidden />
+              <span className="sr-only">Cari percakapan</span>
               <input
+                type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Cari"
+                aria-label="Cari percakapan"
                 className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
               />
-            </div>
+            </label>
           </div>
           <ul className="flex-1 overflow-y-auto py-2">
             {filtered.length === 0 && (
