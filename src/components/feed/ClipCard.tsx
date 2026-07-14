@@ -57,6 +57,9 @@ export function ClipCard({ clip }: { clip: Clip }) {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [shareCount, setShareCount] = useState(clip.shares);
   const [likeBurst, setLikeBurst] = useState(0);
+  const [sharePop, setSharePop] = useState(0);
+  const [discPop, setDiscPop] = useState(0);
+  const [discPressing, setDiscPressing] = useState(false);
   const [floatHearts, setFloatHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(false);
