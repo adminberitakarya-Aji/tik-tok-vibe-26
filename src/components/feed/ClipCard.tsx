@@ -346,17 +346,13 @@ export function ClipCard({ clip }: { clip: Clip }) {
           onPointerCancel={() => setDiscPressing(false)}
           aria-label={`Suara: ${clip.song}`}
           className={cn(
-            "group mt-2 h-12 w-12 rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 transition-transform duration-150 cursor-pointer active:scale-90",
+            "mt-2 h-12 w-12 rounded-full border border-white/20 bg-gradient-to-br from-tikpink to-tikcyan p-1 transition-transform duration-150 cursor-pointer hover:scale-110 active:scale-90",
             discPressing && "scale-90",
+            discPop > 0 && "animate-disc-pop",
           )}
+          key={discPop}
         >
-          <div
-            key={discPop}
-            className={cn(
-              "h-full w-full animate-spin-slow rounded-full transition-transform duration-200 group-hover:scale-110",
-              discPop > 0 && "animate-disc-pop",
-            )}
-          >
+          <div className="h-full w-full animate-spin-slow rounded-full">
             <img
               src={clip.avatar}
               alt=""
