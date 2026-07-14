@@ -323,7 +323,7 @@ export function DesktopClipView({ clip }: { clip: Clip }) {
       </div>
 
       <CommentSheet clip={clip} open={commentsOpen} onOpenChange={setCommentsOpen} />
-    </div>
+    </article>
   );
 }
 
